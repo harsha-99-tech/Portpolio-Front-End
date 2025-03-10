@@ -1,3 +1,4 @@
+import ContactSection from "./sections/ContactSection";
 import HeroSection from "./sections/HeroSection";
 import PortfolioSection from "./sections/PortfolioSection";
 import ProfileSection from "./sections/ProfileSection";
@@ -17,6 +18,9 @@ const Home = () => {
       </div>
       <div id="testimonials">
         <TestimonialSection />
+      </div>
+      <div>
+        <ContactSection />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-// src/components/PortfolioSection.js
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useTheme } from "../../ThemeContext";

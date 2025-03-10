@@ -1,5 +1,5 @@
 {
-  "name": "wvl",
+  "name": "portpolio",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,15 +8,20 @@
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.1.2",
     "axios": "^1.7.7",
+    "emailjs-com": "^3.2.0",
     "jquery": "^3.7.1",
+    "leaflet": "^1.9.4",
+    "portpolio": "file:",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-grid-gallery": "^1.0.1",
     "react-icons": "^5.4.0",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.5",
     "wvl": "file:"
   },
   "scripts": {
