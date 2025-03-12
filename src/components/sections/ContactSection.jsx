@@ -86,28 +86,11 @@ const ContactSection = () => {
   };
 
   return (
-    <section
-      className={`relative min-h-screen flex items-center justify-center py-20 transition-colors duration-500 ${
-        darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"
-      }`}
-    >
-      {/* Background Decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className={`absolute -top-16 -left-16 w-96 h-96 rounded-full blur-3xl opacity-30 ${
-            darkMode ? "bg-blue-700" : "bg-blue-300"
-          }`}
-        ></div>
-        <div
-          className={`absolute -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl opacity-30 ${
-            darkMode ? "bg-pink-700" : "bg-pink-300"
-          }`}
-        ></div>
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center py-20 transition-colors duration-500">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left Side - Contact Details */}
         <div className="space-y-8 animate-fadeIn">
-          <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold mb-6 bg-blue-600 bg-clip-text text-transparent">
             Get in Touch
           </h2>
           <p className="text-lg leading-relaxed opacity-90">
@@ -143,15 +126,30 @@ const ContactSection = () => {
 
         {/* Right Side - Contact Form */}
         <div
-          className={`p-8 rounded-2xl shadow-2xl backdrop-blur-sm animate-slideIn transform hover:scale-[1.01] transition-all duration-300 ${
-            darkMode ? "bg-blue-900/80" : "bg-blue-600/90"
+          className={`p-10 rounded-3xl shadow-lg backdrop-blur-sm animate-slideIn transform  transition-all duration-500 ${
+            darkMode
+              ? "bg-gradient-to-br from-blue-900/20 to-purple-900/20"
+              : "bg-gradient-to-br from-blue-100 to-purple-100"
           }`}
         >
-          <h3 className="text-3xl font-bold text-white mb-6">Contact Me</h3>
-          <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <h3
+            className={`text-4xl font-bold mb-8 text-center bg-gradient-to-r ${
+              darkMode
+                ? "from-blue-300 to-purple-300"
+                : "from-blue-600 to-purple-600"
+            } bg-clip-text text-transparent`}
+          >
+            Contact Me
+          </h3>
+          <form ref={formRef} onSubmit={sendEmail} className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col">
-                <label htmlFor="name" className="text-white mb-2 font-medium">
+                <label
+                  htmlFor="name"
+                  className={`mb-3 font-medium tracking-wide ${
+                    darkMode ? "text-white/90" : "text-gray-700"
+                  }`}
+                >
                   Name
                 </label>
                 <input
@@ -160,13 +158,22 @@ const ContactSection = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="p-3 bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:border-white/60 text-white transition-all duration-300 placeholder-white/50"
+                  className={`p-4 rounded-xl transition-all duration-300 ${
+                    darkMode
+                      ? "bg-white/5 border-2 border-white/20 focus:border-white/40 text-white placeholder-white/40 hover:border-white/30"
+                      : "bg-white border-2 border-gray-200 focus:border-blue-400 text-gray-800 placeholder-gray-400 hover:border-gray-300"
+                  }`}
                   required
                   placeholder="Your name"
                 />
               </div>
               <div className="flex flex-col">
-                <label htmlFor="email" className="text-white mb-2 font-medium">
+                <label
+                  htmlFor="email"
+                  className={`mb-3 font-medium tracking-wide ${
+                    darkMode ? "text-white/90" : "text-gray-700"
+                  }`}
+                >
                   Email
                 </label>
                 <input
@@ -175,14 +182,23 @@ const ContactSection = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="p-3 bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:border-white/60 text-white transition-all duration-300 placeholder-white/50"
+                  className={`p-4 rounded-xl transition-all duration-300 ${
+                    darkMode
+                      ? "bg-white/5 border-2 border-white/20 focus:border-white/40 text-white placeholder-white/40 hover:border-white/30"
+                      : "bg-white border-2 border-gray-200 focus:border-blue-400 text-gray-800 placeholder-gray-400 hover:border-gray-300"
+                  }`}
                   required
                   placeholder="Your email"
                 />
               </div>
             </div>
             <div className="flex flex-col">
-              <label htmlFor="message" className="text-white mb-2 font-medium">
+              <label
+                htmlFor="message"
+                className={`mb-3 font-medium tracking-wide ${
+                  darkMode ? "text-white/90" : "text-gray-700"
+                }`}
+              >
                 Message
               </label>
               <textarea
@@ -190,34 +206,44 @@ const ContactSection = () => {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="p-3 bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:border-white/60 text-white transition-all duration-300 placeholder-white/50"
-                rows="5"
+                className={`p-4 rounded-xl transition-all duration-300 ${
+                  darkMode
+                    ? "bg-white/5 border-2 border-white/20 focus:border-white/40 text-white placeholder-white/40 hover:border-white/30"
+                    : "bg-white border-2 border-gray-200 focus:border-blue-400 text-gray-800 placeholder-gray-400 hover:border-gray-300"
+                }`}
+                rows="6"
                 required
                 placeholder="Your message"
               />
             </div>
-            <div className="text-center">
-              <button
-                type="submit"
-                className="px-8 py-3 bg-white text-blue-600 font-bold rounded-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
-                disabled={isSending}
-              >
-                {isSending ? "Sending..." : "Send Message"}
-              </button>
+            <div className="text-center pt-4">
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className={`px-10 py-4 transform hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed flex items-center  gap-2 rounded-lg font-semibold shadow-md text-lg transition-all duration-300  ${
+                    darkMode
+                      ? "bg-blue-500 hover:bg-blue-600 text-gray-100"
+                      : "bg-blue-600 hover:bg-blue-700 text-gray-100"
+                  }`}
+                  disabled={isSending}
+                >
+                  {isSending ? "Sending..." : "Send Message"}
+                </button>
+              </div>{" "}
             </div>
             {successMessage && (
-              <p className="text-green-300 text-center mt-4 font-medium animate-fadeIn">
+              <p className="text-emerald-300 text-center mt-4 font-medium animate-fadeIn bg-emerald-900/20 py-3 rounded-lg">
                 {successMessage}
               </p>
             )}
             {errorMessage && (
-              <p className="text-red-300 text-center mt-4 font-medium animate-fadeIn">
+              <p className="text-rose-300 text-center mt-4 font-medium animate-fadeIn bg-rose-900/20 py-3 rounded-lg">
                 {errorMessage}
               </p>
             )}
           </form>
         </div>
-      </div>
+      </div>{" "}
     </section>
   );
 };

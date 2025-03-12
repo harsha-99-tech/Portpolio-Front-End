@@ -13,16 +13,20 @@ const ProjectCard = ({ project }) => {
     >
       {/* Project Image */}
       <img
-        src={project.image}
-        alt={project.project}
+        src={project.image || "/default-image.jpg"} // Fallback image if project image is not available
+        alt={project.project || "Project Image"}
         className="w-full h-48 object-cover rounded-md mb-4"
       />
 
       {/* Project Title */}
-      <h3 className="text-xl font-semibold mb-2">{project.project}</h3>
+      <h3 className="text-xl font-semibold mb-2">
+        {project.project || "Untitled"}
+      </h3>
 
       {/* Project Description */}
-      <p className="text-sm mb-4">{project.description}</p>
+      <p className="text-sm mb-4">
+        {project.description || "No description provided."}
+      </p>
 
       {/* Technologies */}
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
@@ -42,7 +46,7 @@ const ProjectCard = ({ project }) => {
 
       {/* View Project Button */}
       <a
-        href={project.link}
+        href={project.link || "#"} // Fallback to "#" if no project link
         target="_blank"
         rel="noopener noreferrer"
         className="inline-block bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-lg font-semibold px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"

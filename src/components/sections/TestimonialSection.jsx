@@ -47,9 +47,7 @@ const TestimonialSection = () => {
 
   return (
     <section
-      className={`min-h-screen py-16 transition-colors duration-500 ${
-        darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"
-      }`}
+      className=" min-h-30 py-16 transition-colors duration-500"
       id="testimonials"
     >
       <div className="container mx-auto text-center">

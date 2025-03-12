@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
+import { DarkModeSwitch } from "react-toggle-dark-mode"; // Correct import
 
 const Header = () => {
   const { darkMode, toggleTheme } = useTheme();
   const [hidden, setHidden] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false); // State to toggle menu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,9 +53,23 @@ const Header = () => {
           </button>
         </Link>
 
-        {/* Navigation Menu (Aligned to Right) */}
-        <div className="flex items-center space-x-10">
-          <nav className="hidden md:flex space-x-8">
+        {/* Hamburger Menu for Mobile */}
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)} // Toggle menu visibility
+            className="text-3xl text-gray-900 dark:text-gray-100"
+          >
+            ☰
+          </button>
+        </div>
+
+        {/* Navigation Menu (Desktop and Mobile) */}
+        <div
+          className={`md:flex items-center space-x-10 ${
+            menuOpen ? "flex" : "hidden"
+          } md:block`}
+        >
+          <nav className="space-x-8">
             <button
               onClick={() => scrollToSection("hero")}
               className="text-xl font-semibold transition-transform duration-300 hover:scale-110 hover:text-blue-500"
@@ -81,16 +97,14 @@ const Header = () => {
           </nav>
 
           {/* Dark/Light Mode Toggle */}
-          <button
-            onClick={toggleTheme}
-            className={`px-5 py-2 text-lg font-semibold rounded-full shadow-md transition-all duration-300 ${
-              darkMode
-                ? "bg-gray-100 text-gray-900 hover:bg-gray-200"
-                : "bg-gray-900 text-gray-100 hover:bg-gray-800"
-            }`}
-          >
-            {darkMode ? "Light Mode" : "Dark Mode"}
-          </button>
+          <div className="ml-4">
+            <DarkModeSwitch
+              checked={darkMode}
+              onChange={toggleTheme}
+              size={30} // Adjust size as needed
+              className="transition-all duration-300"
+            />
+          </div>
         </div>
       </div>
     </header>

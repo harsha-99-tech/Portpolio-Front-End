@@ -51,11 +51,7 @@ const PortfolioSection = () => {
   }, [activeTab, tabMapping, API_BASE_URL]); // Include API_BASE_URL as a dependency
 
   return (
-    <section
-      className={` min-h-screenpy-20 px-6 md:px-20 transition-colors duration-500 ${
-        darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"
-      }`}
-    >
+    <section className="min-h-screen py-20 px-6 md:px-20 transition-colors duration-500 ">
       <div className="container mx-auto text-center">
         <h2
           className={`text-4xl md:text-5xl font-extrabold mb-10 ${

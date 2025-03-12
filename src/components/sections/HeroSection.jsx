@@ -15,25 +15,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section
-      className={`relative min-h-screen flex items-center justify-center transition-colors duration-500 ${
-        darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"
-      }`}
-    >
-      {/* Background Decoration */}
-      <div className="absolute inset-0">
-        <div
-          className={`absolute -top-16 -left-16 w-96 h-96 rounded-full blur-3xl opacity-50 ${
-            darkMode ? "bg-blue-700" : "bg-blue-300"
-          }`}
-        ></div>
-        <div
-          className={`absolute -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl opacity-50 ${
-            darkMode ? "bg-pink-700" : "bg-pink-300"
-          }`}
-        ></div>
-      </div>
-
+    <section className="relative min-h-screen flex items-center justify-center transition-colors duration-500 ">
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-12 relative z-10">
         {/* Left Section: Text */}
         <div className="md:w-1/2 text-center md:text-left space-y-6">
@@ -67,6 +49,7 @@ const HeroSection = () => {
               View Portfolio <FiArrowRight />
             </button>
             <button
+              onClick={() => scrollToSection("contact")}
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold shadow-md text-lg border transition-all duration-300 ${
                 darkMode
                   ? "border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-gray-100"

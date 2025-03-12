@@ -13,3 +13,13 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Dark mode styles */
+html.dark {
+  background-color: #121212;
+}
+
+body.dark {
+  background-color: #181818;
+  color: #ffffff;
+}

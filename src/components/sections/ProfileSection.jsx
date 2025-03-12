@@ -11,11 +11,7 @@ const ProfileSection = () => {
   const { darkMode } = useTheme();
 
   return (
-    <section
-      className={` min-h-screen py-20 px-6 md:px-20 transition-colors duration-500 ${
-        darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"
-      }`}
-    >
+    <section className=" min-h-screen py-20 px-6 md:px-20 transition-colors duration-500 ">
       <div className="container mx-auto text-center md:text-left">
         <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-center">
           About Me & My Skills
@@ -30,7 +26,7 @@ const ProfileSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {/* Degree */}
           <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 ${
+            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
           >
@@ -46,7 +42,7 @@ const ProfileSection = () => {
 
           {/* Courses */}
           <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 ${
+            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
           >
@@ -60,7 +56,7 @@ const ProfileSection = () => {
 
           {/* Tools & Technologies */}
           <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 ${
+            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
           >
@@ -118,7 +114,7 @@ const ProfileSection = () => {
 
           {/* Softwares */}
           <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 ${
+            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
           >

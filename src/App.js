@@ -4,6 +4,15 @@ import Header from "./components/Header";
 import Landing from "./components/Landing";
 import Home from "./components/Home";
 
+function Layout({ children }) {
+  return (
+    <div>
+      <Header />
+      <main>{children}</main>
+    </div>
+  );
+}
+
 function App() {
   const location = useLocation();
 
@@ -14,7 +23,15 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Landing />} /> {/* Landing page */}
-        <Route path="/home" element={<Home />} /> {/* Home page */}
+        <Route
+          path="/home"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />{" "}
+        {/* Home page with layout */}
       </Routes>
     </>
   );
