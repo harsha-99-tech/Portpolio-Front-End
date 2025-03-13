@@ -11,7 +11,7 @@ const ProfileSection = () => {
   const { darkMode } = useTheme();
 
   return (
-    <section className=" min-h-screen py-20 px-6 md:px-20 transition-colors duration-500 ">
+    <section className="min-h-screen  transition-colors duration-500">
       <div className="container mx-auto text-center md:text-left">
         <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-center">
           About Me & My Skills
@@ -29,6 +29,7 @@ const ProfileSection = () => {
             className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
+            style={{ position: "relative", zIndex: 1 }}
           >
             <FaGraduationCap className="text-5xl text-blue-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Degree</h3>
@@ -45,6 +46,7 @@ const ProfileSection = () => {
             className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
+            style={{ position: "relative", zIndex: 1 }}
           >
             <FaLaptopCode className="text-5xl text-green-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Skills</h3>
@@ -59,55 +61,65 @@ const ProfileSection = () => {
             className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
+            style={{ position: "relative", zIndex: 1 }}
           >
             <FaTools className="text-5xl text-red-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Tools & Technologies</h3>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
-              {/* Icons for Tools */}
+              {/* Icons for Tools with Tooltips */}
               <img
                 src="https://img.icons8.com/color/48/000000/javascript.png"
                 alt="JavaScript"
-                className="w-10 h-10"
+                title="JavaScript"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/react-native.png"
                 alt="React"
-                className="w-10 h-10"
+                title="React"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/nodejs.png"
                 alt="Node.js"
-                className="w-10 h-10"
+                title="Node.js"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/ios-filled/50/000000/python.png"
                 alt="Python"
-                className="w-10 h-10"
+                title="Python"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/mongodb.png"
                 alt="MongoDB"
-                className="w-10 h-10"
+                title="MongoDB"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/html-5.png"
                 alt="HTML"
-                className="w-10 h-10"
+                title="HTML"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/ios-filled/50/000000/css3.png"
                 alt="CSS"
-                className="w-10 h-10"
+                title="CSS"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/git.png"
                 alt="Git"
-                className="w-10 h-10"
+                title="Git"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/github.png"
                 alt="GitHub"
-                className="w-10 h-10"
+                title="GitHub"
+                className="w-12 h-12"
               />
             </div>
           </div>
@@ -117,40 +129,47 @@ const ProfileSection = () => {
             className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
+            style={{ position: "relative", zIndex: 1 }}
           >
             <FaPaintBrush className="text-5xl text-purple-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Softwares I Use</h3>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
-              {/* Icons for Softwares */}
+              {/* Icons for Softwares with Tooltips */}
               <img
                 src="https://img.icons8.com/color/48/000000/adobe-photoshop.png"
                 alt="Adobe Photoshop"
-                className="w-10 h-10"
+                title="Adobe Photoshop"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/adobe-illustrator.png"
                 alt="Adobe Illustrator"
-                className="w-10 h-10"
+                title="Adobe Illustrator"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/figma.png"
                 alt="Figma"
-                className="w-10 h-10"
+                title="Figma"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/adobe-indesign.png"
                 alt="Adobe InDesign"
-                className="w-10 h-10"
+                title="Adobe InDesign"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/canva.png"
                 alt="Canva"
-                className="w-10 h-10"
+                title="Canva"
+                className="w-12 h-12"
               />
               <img
                 src="https://img.icons8.com/color/48/000000/davinci-resolve.png"
                 alt="DaVinci Resolve"
-                className="w-10 h-10"
+                title="DaVinci Resolve"
+                className="w-12 h-12"
               />
             </div>
           </div>

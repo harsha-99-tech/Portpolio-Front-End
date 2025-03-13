@@ -44,7 +44,7 @@ const Header = () => {
     >
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <Link to="/">
+        <Link to="/" aria-label="Go to homepage">
           <button
             onClick={() => scrollToSection("hero")}
             className="text-4xl font-extrabold tracking-widest uppercase hover:text-blue-500 transition-colors duration-300"
@@ -58,6 +58,7 @@ const Header = () => {
           <button
             onClick={() => setMenuOpen(!menuOpen)} // Toggle menu visibility
             className="text-3xl text-gray-900 dark:text-gray-100"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
             ☰
           </button>
@@ -67,7 +68,7 @@ const Header = () => {
         <div
           className={`md:flex items-center space-x-10 ${
             menuOpen ? "flex" : "hidden"
-          } md:block`}
+          } md:block md:space-x-10 transition-all duration-300`}
         >
           <nav className="space-x-8">
             <button
@@ -103,6 +104,7 @@ const Header = () => {
               onChange={toggleTheme}
               size={30} // Adjust size as needed
               className="transition-all duration-300"
+              aria-label="Toggle dark mode"
             />
           </div>
         </div>

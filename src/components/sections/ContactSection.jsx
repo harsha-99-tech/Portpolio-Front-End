@@ -86,7 +86,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center py-20 transition-colors duration-500">
+    <section className="relative min-h-screen flex items-center justify-center transition-colors duration-500">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left Side - Contact Details */}
         <div className="space-y-8 animate-fadeIn">
@@ -119,6 +119,7 @@ const ContactSection = () => {
                 className="w-full h-full"
                 src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&q=Nikaweratiya`}
                 loading="lazy"
+                style={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
               ></iframe>
             </div>
           </div>
@@ -126,7 +127,7 @@ const ContactSection = () => {
 
         {/* Right Side - Contact Form */}
         <div
-          className={`p-10 rounded-3xl shadow-lg backdrop-blur-sm animate-slideIn transform  transition-all duration-500 ${
+          className={`p-10 rounded-3xl shadow-lg backdrop-blur-sm animate-slideIn transform transition-all duration-500 relative z-20 ${
             darkMode
               ? "bg-gradient-to-br from-blue-900/20 to-purple-900/20"
               : "bg-gradient-to-br from-blue-100 to-purple-100"
@@ -220,7 +221,7 @@ const ContactSection = () => {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className={`px-10 py-4 transform hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed flex items-center  gap-2 rounded-lg font-semibold shadow-md text-lg transition-all duration-300  ${
+                  className={`px-10 py-4 transform hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2 rounded-lg font-semibold shadow-md text-lg transition-all duration-300 ${
                     darkMode
                       ? "bg-blue-500 hover:bg-blue-600 text-gray-100"
                       : "bg-blue-600 hover:bg-blue-700 text-gray-100"
@@ -229,7 +230,7 @@ const ContactSection = () => {
                 >
                   {isSending ? "Sending..." : "Send Message"}
                 </button>
-              </div>{" "}
+              </div>
             </div>
             {successMessage && (
               <p className="text-emerald-300 text-center mt-4 font-medium animate-fadeIn bg-emerald-900/20 py-3 rounded-lg">
@@ -237,13 +238,13 @@ const ContactSection = () => {
               </p>
             )}
             {errorMessage && (
-              <p className="text-rose-300 text-center mt-4 font-medium animate-fadeIn bg-rose-900/20 py-3 rounded-lg">
+              <p className="text-red-300 text-center mt-4 font-medium animate-fadeIn bg-red-900/20 py-3 rounded-lg">
                 {errorMessage}
               </p>
             )}
           </form>
         </div>
-      </div>{" "}
+      </div>
     </section>
   );
 };

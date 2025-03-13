@@ -6,7 +6,7 @@ import Home from "./components/Home";
 
 function Layout({ children }) {
   return (
-    <div>
+    <div className="main-container">
       <Header />
       <main>{children}</main>
     </div>

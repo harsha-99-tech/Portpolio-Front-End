@@ -18,7 +18,7 @@ export const ThemeProvider = ({ children }) => {
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
-    // Update localStorage with the theme choice
+    // Update localStorage with the theme choice securely
     if (!darkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");

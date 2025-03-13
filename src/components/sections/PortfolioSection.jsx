@@ -27,10 +27,12 @@ const PortfolioSection = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
       setLoading(true);
+      setError(null);
 
       if (!API_BASE_URL) return; // Prevents API call if base URL is missing
 
@@ -41,6 +43,7 @@ const PortfolioSection = () => {
         setProjects(response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);
+        setError("Failed to load projects. Please try again later.");
         setProjects([]);
       }
 
@@ -48,10 +51,10 @@ const PortfolioSection = () => {
     };
 
     fetchProjects();
-  }, [activeTab, tabMapping, API_BASE_URL]); // Include API_BASE_URL as a dependency
+  }, [activeTab, tabMapping, API_BASE_URL]);
 
   return (
-    <section className="min-h-screen py-20 px-6 md:px-20 transition-colors duration-500 ">
+    <section className="min-h-screen  transition-colors duration-500 relative">
       <div className="container mx-auto text-center">
         <h2
           className={`text-4xl md:text-5xl font-extrabold mb-10 ${
@@ -61,8 +64,8 @@ const PortfolioSection = () => {
           My Portfolio
         </h2>
 
-        {/* Tabs with enhanced animation and styling */}
-        <div className="flex justify-center gap-4 mb-10">
+        {/* Tabs with wrapping on smaller screens */}
+        <div className="flex flex-wrap justify-center gap-4 mb-10">
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -81,17 +84,12 @@ const PortfolioSection = () => {
         </div>
 
         {/* Projects Container with fixed or min-height */}
-        <div className="min-h-[500px] flex justify-center items-center">
-          {/* Projects */}
+        <div className="min-h-[500px] flex justify-center items-center relative z-10">
+          {/* Loading state */}
           {loading ? (
             <div className="flex justify-center items-center space-x-4">
-              {/* Spinner animation with dark mode support */}
               <div
-                className={`spinner-border animate-spin inline-block w-16 h-16 border-4 rounded-full ${
-                  darkMode
-                    ? "border-t-blue-500 border-gray-200"
-                    : "border-t-blue-600 border-gray-200"
-                }`}
+                className={`w-16 h-16 border-4 border-t-blue-500 border-gray-200 rounded-full animate-spin`}
               ></div>
               <p
                 className={`text-lg ${
@@ -101,10 +99,31 @@ const PortfolioSection = () => {
                 Loading...
               </p>
             </div>
+          ) : error ? (
+            <div
+              className={`text-lg mt-6 ${
+                darkMode ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              <p
+                className={`text-xl font-semibold mb-4 ${
+                  darkMode ? "text-gray-100" : "text-gray-900"
+                }`}
+              >
+                {error}
+              </p>
+              <p
+                className={`text-md ${
+                  darkMode ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                We’re constantly adding new ones, stay tuned!
+              </p>
+            </div>
           ) : projects.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} /> // Use ProjectCard component
+                <ProjectCard key={project.id} project={project} />
               ))}
             </div>
           ) : (
