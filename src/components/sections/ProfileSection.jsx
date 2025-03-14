@@ -80,6 +80,12 @@ const ProfileSection = () => {
                 className="w-12 h-12"
               />
               <img
+                src="https://img.icons8.com/color/48/000000/nextjs.png"
+                alt="NextJS"
+                title="NextJS"
+                className="w-12 h-12"
+              />
+              <img
                 src="https://img.icons8.com/color/48/000000/nodejs.png"
                 alt="Node.js"
                 title="Node.js"

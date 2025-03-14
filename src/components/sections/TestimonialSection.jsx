@@ -47,7 +47,7 @@ const TestimonialSection = () => {
 
   return (
     <section
-      className=" min-h-30 py-4 transition-colors duration-500"
+      className=" min-h-30 py-10 transition-colors duration-500"
       id="testimonials"
     >
       <div className="container mx-auto text-center">

@@ -65,15 +65,9 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Navigation Menu (Desktop and Mobile) */}
-        <div
-          className={`absolute top-full left-0 w-full ${
-            darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
-          } flex flex-col items-center gap-4 py-6 shadow-lg ${
-            menuOpen ? "block" : "hidden"
-          } md:relative md:flex md:flex-row md:items-center md:gap-10 md:py-0`}
-        >
-          <nav className="flex flex-col items-center space-y-4 md:space-y-0 md:flex-row md:space-x-8">
+        {/* Navigation Menu (Desktop) */}
+        <div className="hidden md:flex items-center space-x-10">
+          <nav className="space-x-8">
             <button
               onClick={() => scrollToSection("hero")}
               className="text-xl font-semibold transition-transform duration-300 hover:scale-110 hover:text-blue-500"
@@ -101,7 +95,7 @@ const Header = () => {
           </nav>
 
           {/* Dark/Light Mode Toggle */}
-          <div className="mt-4 md:mt-0">
+          <div>
             <DarkModeSwitch
               checked={darkMode}
               onChange={toggleTheme}
@@ -111,6 +105,53 @@ const Header = () => {
             />
           </div>
         </div>
+
+        {/* Expanded Mobile Menu */}
+        {menuOpen && (
+          <div
+            className={`absolute top-full left-0 w-full ${
+              darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
+            } flex flex-col items-center gap-4 py-6 shadow-lg md:hidden`}
+          >
+            <nav className="flex flex-col items-center space-y-4">
+              <button
+                onClick={() => scrollToSection("hero")}
+                className="text-xl font-semibold transition-transform duration-300 hover:scale-110 hover:text-blue-500"
+              >
+                Home
+              </button>
+              <button
+                onClick={() => scrollToSection("profile")}
+                className="text-xl font-semibold transition-transform duration-300 hover:scale-110 hover:text-blue-500"
+              >
+                About
+              </button>
+              <button
+                onClick={() => scrollToSection("portfolio")}
+                className="text-xl font-semibold transition-transform duration-300 hover:scale-110 hover:text-blue-500"
+              >
+                Portfolio
+              </button>
+              <button
+                onClick={() => scrollToSection("testimonials")}
+                className="text-xl font-semibold transition-transform duration-300 hover:scale-110 hover:text-blue-500"
+              >
+                Testimonials
+              </button>
+            </nav>
+
+            {/* Dark/Light Mode Toggle in Mobile Menu */}
+            <div>
+              <DarkModeSwitch
+                checked={darkMode}
+                onChange={toggleTheme}
+                size={30}
+                className="transition-all duration-300"
+                aria-label="Toggle dark mode"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
