@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
-import { DarkModeSwitch } from "react-toggle-dark-mode"; // Correct import
+import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { IoClose } from "react-icons/io5";
 
 const Header = () => {
   const { darkMode, toggleTheme } = useTheme();
   const [hidden, setHidden] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false); // State to toggle menu
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > prevScrollY && currentScrollY > 100) {
-        setHidden(true); // Hide header when scrolling down
+        setHidden(true);
       } else {
-        setHidden(false); // Show header when scrolling up
+        setHidden(false);
       }
 
       setPrevScrollY(currentScrollY);
@@ -26,11 +27,11 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollY]);
 
-  // Smooth scroll function
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
+      setMenuOpen(false);
     }
   };
 
@@ -53,24 +54,26 @@ const Header = () => {
           </button>
         </Link>
 
-        {/* Hamburger Menu for Mobile */}
+        {/* Hamburger / Exit Icon for Mobile */}
         <div className="md:hidden flex items-center">
           <button
-            onClick={() => setMenuOpen(!menuOpen)} // Toggle menu visibility
-            className="text-3xl text-gray-900 dark:text-gray-100"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-3xl"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
-            ☰
+            {menuOpen ? <IoClose /> : "☰"}
           </button>
         </div>
 
         {/* Navigation Menu (Desktop and Mobile) */}
         <div
-          className={`md:flex items-center space-x-10 ${
-            menuOpen ? "flex" : "hidden"
-          } md:block md:space-x-10 transition-all duration-300`}
+          className={`absolute top-full left-0 w-full ${
+            darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
+          } flex flex-col items-center gap-4 py-6 shadow-lg ${
+            menuOpen ? "block" : "hidden"
+          } md:relative md:flex md:flex-row md:items-center md:gap-10 md:py-0`}
         >
-          <nav className="space-x-8">
+          <nav className="flex flex-col items-center space-y-4 md:space-y-0 md:flex-row md:space-x-8">
             <button
               onClick={() => scrollToSection("hero")}
               className="text-xl font-semibold transition-transform duration-300 hover:scale-110 hover:text-blue-500"
@@ -98,11 +101,11 @@ const Header = () => {
           </nav>
 
           {/* Dark/Light Mode Toggle */}
-          <div className="ml-4">
+          <div className="mt-4 md:mt-0">
             <DarkModeSwitch
               checked={darkMode}
               onChange={toggleTheme}
-              size={30} // Adjust size as needed
+              size={30}
               className="transition-all duration-300"
               aria-label="Toggle dark mode"
             />

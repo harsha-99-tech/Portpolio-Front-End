@@ -54,7 +54,7 @@ const PortfolioSection = () => {
   }, [activeTab, tabMapping, API_BASE_URL]);
 
   return (
-    <section className="min-h-screen  transition-colors duration-500 relative">
+    <section className="min-h-screen py-4 transition-colors duration-500 relative">
       <div className="container mx-auto text-center">
         <h2
           className={`text-4xl md:text-5xl font-extrabold mb-10 ${

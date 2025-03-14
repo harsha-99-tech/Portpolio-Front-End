@@ -11,7 +11,7 @@ const ProfileSection = () => {
   const { darkMode } = useTheme();
 
   return (
-    <section className="min-h-screen  transition-colors duration-500">
+    <section className="min-h-screen py-4  transition-colors duration-500">
       <div className="container mx-auto text-center md:text-left">
         <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-center">
           About Me & My Skills
