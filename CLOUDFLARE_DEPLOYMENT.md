@@ -1,6 +1,6 @@
 # Cloudflare Deployment Guide
 
-This guide will help you deploy your Next.js portfolio to Cloudflare Workers (recommended for Next.js 16 with API routes).
+This guide will help you deploy your Next.js portfolio to Cloudflare Pages (supports Next.js 16 with API routes via Workers integration).
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ This guide will help you deploy your Next.js portfolio to Cloudflare Workers (re
 
 ## Step 1: Install Cloudflare Adapter
 
-The `@opennextjs/cloudflare` package has been installed. This adapter allows Next.js 16 to run on Cloudflare Workers.
+The `@opennextjs/cloudflare` package has been installed. This adapter allows Next.js 16 to run on Cloudflare Pages (which uses Workers under the hood for API routes and server-side functionality).
 
 ## Step 2: Configuration Files
 
@@ -61,13 +61,13 @@ The following files have been created/updated:
    - Convert it for Cloudflare Workers
    - Deploy to Cloudflare
 
-5. **Your site will be live at**: `https://portpolio-harsha.YOUR_SUBDOMAIN.workers.dev`
+5. **Your site will be live at**: `https://portpolio-harsha.YOUR_SUBDOMAIN.pages.dev` (for Pages) or `https://portpolio-harsha.YOUR_SUBDOMAIN.workers.dev` (for Workers)
 
-### Option B: Deploy via Cloudflare Dashboard (Git Integration)
+### Option B: Deploy via Cloudflare Dashboard (Git Integration) - **Recommended for Pages**
 
 1. **Go to Cloudflare Dashboard**
    - Visit [dash.cloudflare.com](https://dash.cloudflare.com)
-   - Navigate to **Workers & Pages** → **Create application** → **Workers**
+   - Navigate to **Workers & Pages** → **Create application** → **Pages**
 
 2. **Connect Your Repository**
    - Click **Connect to Git**
@@ -77,18 +77,19 @@ The following files have been created/updated:
 3. **Configure Build Settings**
    - **Framework preset**: Select **None** or **Custom** (do NOT use "Next.js" preset as it uses deprecated `@cloudflare/next-on-pages`)
    - **Build command**: `npm run pages:build` (or `npm install && npm run pages:build`)
+   - **Build output directory**: Leave empty or set to `.open-next` (Cloudflare Pages will automatically detect the correct output from OpenNext)
    - **Root directory**: `/` (leave empty if root)
-   - **Note**: Use `pages:build` (build only), not `deploy` (build + deploy). Cloudflare will handle deployment automatically.
+   - **Note**: Use `pages:build` (build only), not `deploy` (build + deploy). Cloudflare Pages will handle deployment automatically.
    - **Important**: If Cloudflare auto-detects Next.js and uses `@cloudflare/next-on-pages`, you must manually override the build command to use `npm run pages:build` instead.
 
 4. **Set Environment Variables**
-   - Go to **Settings** → **Variables and Secrets**
-   - Add each environment variable:
+   - Go to **Settings** → **Environment variables**
+   - Add each environment variable for **Production**, **Preview**, and **Branch** environments:
      - `MONGODB_URI`
      - `EMAILJS_SERVICE_ID`
      - `EMAILJS_TEMPLATE_ID`
      - `EMAILJS_PUBLIC_KEY`
-   - Mark them as **Encrypted** (secrets)
+   - Click **Save** after adding each variable
 
 5. **Deploy**
    - Click **Save and Deploy**
@@ -96,11 +97,11 @@ The following files have been created/updated:
 
 ## Step 4: Configure Custom Domain (Optional)
 
-1. In Cloudflare Workers dashboard, go to your worker
-2. Click **Triggers** → **Custom Domains**
+1. In Cloudflare Pages dashboard, go to your project
+2. Click **Custom domains**
 3. Add your domain
 4. Update your domain's DNS records as instructed by Cloudflare
-   - Add a CNAME record pointing to your worker's subdomain
+   - Add a CNAME record pointing to your Pages subdomain
 
 ## Important Notes
 
@@ -118,7 +119,8 @@ The following files have been created/updated:
 
 ### API Routes
 - All API routes in `src/app/api/` will work on Cloudflare Pages
-- They run as Cloudflare Workers (edge functions)
+- They run as Cloudflare Workers (edge functions) automatically
+- Pages integrates Workers seamlessly for serverless functions
 
 ### Build Output
 - Your Next.js app runs on Cloudflare Workers (edge functions)
