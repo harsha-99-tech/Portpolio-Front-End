@@ -91,6 +91,32 @@ if (fs.existsSync(publicDir)) {
 // Create _routes.json to route requests to the Worker
 // Exclude static assets so they're served directly by Cloudflare Pages CDN (faster and more reliable)
 const routesPath = path.join('.open-next', '_routes.json');
+
+// Get list of files in public folder to exclude from Worker routing
+const publicFiles = [];
+const publicDir = path.join('.', 'public');
+if (fs.existsSync(publicDir)) {
+  try {
+    const getPublicFiles = (dir, basePath = '') => {
+      const items = fs.readdirSync(dir);
+      items.forEach(item => {
+        if (item.startsWith('.')) return; // Skip hidden files
+        const fullPath = path.join(dir, item);
+        const relativePath = basePath ? `${basePath}/${item}` : `/${item}`;
+        const stat = fs.statSync(fullPath);
+        if (stat.isDirectory()) {
+          getPublicFiles(fullPath, relativePath);
+        } else {
+          publicFiles.push(relativePath);
+        }
+      });
+    };
+    getPublicFiles(publicDir);
+  } catch (error) {
+    console.warn('⚠ Error reading public files for routing:', error.message);
+  }
+}
+
 const routesConfig = {
   version: 1,
   include: ['/*'],
@@ -101,7 +127,9 @@ const routesConfig = {
     '/favicon.svg',
     '/favicon-*.png',
     '/apple-touch-icon.png',
-    '/site.webmanifest'
+    '/site.webmanifest',
+    // Exclude all public folder files
+    ...publicFiles
   ]
 };
 
