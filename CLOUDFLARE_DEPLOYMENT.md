@@ -72,8 +72,9 @@ The following files have been created/updated:
    - Select your repository
 
 3. **Configure Build Settings**
-   - **Build command**: `npm run deploy` (or `npm install && npm run deploy`)
+   - **Build command**: `npm run pages:build` (or `npm install && npm run pages:build`)
    - **Root directory**: `/` (leave empty if root)
+   - **Note**: Use `pages:build` (build only), not `deploy` (build + deploy). Cloudflare will handle deployment automatically.
 
 4. **Set Environment Variables**
    - Go to **Settings** → **Variables and Secrets**
