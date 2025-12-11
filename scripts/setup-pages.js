@@ -18,6 +18,13 @@ if (fs.existsSync(workerPath)) {
   console.warn('⚠ worker.js not found in .open-next directory');
 }
 
+// Also copy worker.js to root of output as _worker.js (alternative location)
+const rootWorkerDest = path.join('.open-next', '_worker.js');
+if (fs.existsSync(workerPath)) {
+  fs.copyFileSync(workerPath, rootWorkerDest);
+  console.log('✓ Worker also copied to _worker.js at root');
+}
+
 // Create _routes.json to route all requests to the Worker
 const routesPath = path.join('.open-next', '_routes.json');
 const routesConfig = {
