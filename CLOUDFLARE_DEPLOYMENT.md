@@ -77,7 +77,7 @@ The following files have been created/updated:
 3. **Configure Build Settings**
    - **Framework preset**: Select **None** or **Custom** (do NOT use "Next.js" preset as it uses deprecated `@cloudflare/next-on-pages`)
    - **Build command**: `npm run pages:build` (or `npm install && npm run pages:build`)
-   - **Build output directory**: `.open-next/cloudflare-static` (This is where OpenNext Cloudflare generates the Pages-compatible output)
+   - **Build output directory**: `.open-next` (OpenNext Cloudflare generates output in the .open-next directory)
    - **Root directory**: `/` (leave empty if root)
    - **Note**: Use `pages:build` (build only), not `deploy` (build + deploy). Cloudflare Pages will handle deployment automatically.
    - **Important**: If Cloudflare auto-detects Next.js and uses `@cloudflare/next-on-pages`, you must manually override the build command to use `npm run pages:build` instead.
