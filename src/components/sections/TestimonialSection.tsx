@@ -94,11 +94,11 @@ const TestimonialSection = () => {
                 }}
                 onBeforeInit={(swiper) => {
                   if (prevRef.current && nextRef.current && paginationRef.current) {
-                    if (swiper.params.navigation) {
+                    if (swiper.params.navigation && typeof swiper.params.navigation === 'object') {
                       swiper.params.navigation.prevEl = prevRef.current;
                       swiper.params.navigation.nextEl = nextRef.current;
                     }
-                    if (swiper.params.pagination) {
+                    if (swiper.params.pagination && typeof swiper.params.pagination === 'object') {
                       swiper.params.pagination.el = paginationRef.current;
                     }
                     swiper.navigation.init();
