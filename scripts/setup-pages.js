@@ -66,13 +66,36 @@ if (fs.existsSync(assetsDir)) {
   }
 }
 
-// Copy public folder assets to .open-next root so they're accessible
+// Copy public folder assets to .open-next root and collect file paths for routing
 const publicDir = path.join('.', 'public');
+const publicFiles = [];
 if (fs.existsSync(publicDir)) {
   try {
+    const processPublicFiles = (dir, basePath = '') => {
+      const items = fs.readdirSync(dir);
+      items.forEach(item => {
+        if (item.startsWith('.')) return; // Skip hidden files
+        
+        const fullPath = path.join(dir, item);
+        const relativePath = basePath ? `${basePath}/${item}` : `/${item}`;
+        const stat = fs.statSync(fullPath);
+        
+        if (stat.isDirectory()) {
+          // Recursively process subdirectories
+          processPublicFiles(fullPath, relativePath);
+        } else {
+          // Add file to routing exclusion list
+          publicFiles.push(relativePath);
+        }
+      });
+    };
+    
+    // First, collect all file paths for routing
+    processPublicFiles(publicDir);
+    
+    // Then copy all files from public to output directory
     fs.readdirSync(publicDir).forEach(item => {
-      // Skip .gitkeep and other hidden files
-      if (item.startsWith('.')) return;
+      if (item.startsWith('.')) return; // Skip hidden files
       
       const srcPath = path.join(publicDir, item);
       const destPath = path.join('.open-next', item);
@@ -82,40 +105,16 @@ if (fs.existsSync(publicDir)) {
         copyRecursiveSync(srcPath, destPath);
       }
     });
+    
     console.log('✓ Public folder assets copied to output directory');
   } catch (error) {
-    console.warn('⚠ Error copying public assets:', error.message);
+    console.warn('⚠ Error processing public assets:', error.message);
   }
 }
 
 // Create _routes.json to route requests to the Worker
 // Exclude static assets so they're served directly by Cloudflare Pages CDN (faster and more reliable)
 const routesPath = path.join('.open-next', '_routes.json');
-
-// Get list of files in public folder to exclude from Worker routing
-const publicFiles = [];
-const publicDir = path.join('.', 'public');
-if (fs.existsSync(publicDir)) {
-  try {
-    const getPublicFiles = (dir, basePath = '') => {
-      const items = fs.readdirSync(dir);
-      items.forEach(item => {
-        if (item.startsWith('.')) return; // Skip hidden files
-        const fullPath = path.join(dir, item);
-        const relativePath = basePath ? `${basePath}/${item}` : `/${item}`;
-        const stat = fs.statSync(fullPath);
-        if (stat.isDirectory()) {
-          getPublicFiles(fullPath, relativePath);
-        } else {
-          publicFiles.push(relativePath);
-        }
-      });
-    };
-    getPublicFiles(publicDir);
-  } catch (error) {
-    console.warn('⚠ Error reading public files for routing:', error.message);
-  }
-}
 
 const routesConfig = {
   version: 1,
