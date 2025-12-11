@@ -1,0 +1,7 @@
+name = "portpolio-harsha"
+compatibility_date = "2024-12-11"
+node_compat = true
+
+# Environment variables can be set in Cloudflare dashboard
+# or via wrangler secret put command
+
