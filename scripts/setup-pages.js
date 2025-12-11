@@ -25,11 +25,11 @@ if (fs.existsSync(workerPath)) {
   console.log('✓ Worker also copied to _worker.js at root');
 }
 
-// Check if static assets exist in assets directory and need to be moved/copied
+// Check if static assets exist in assets directory and copy them to root
 const assetsDir = path.join('.open-next', 'assets');
 if (fs.existsSync(assetsDir)) {
-  // OpenNext may put assets in .open-next/assets, but they need to be at root
-  // Copy assets to root of output directory
+  // OpenNext puts assets in .open-next/assets, but they need to be accessible at root
+  // Copy assets from .open-next/assets to .open-next root so Worker can serve them
   const copyRecursiveSync = (src, dest) => {
     const exists = fs.existsSync(src);
     const stats = exists && fs.statSync(src);
@@ -49,19 +49,39 @@ if (fs.existsSync(assetsDir)) {
     }
   };
   
-  // Copy assets to root of .open-next (they'll be served from there)
-  const assetsDest = path.join('.open-next', 'assets');
-  // Assets are already in the right place, just log
-  console.log('✓ Static assets found in assets directory');
+  // Copy assets from .open-next/assets to .open-next root
+  // This ensures assets are accessible at the paths Next.js expects (e.g., /_next/static/...)
+  const assetsDest = path.join('.open-next');
+  try {
+    fs.readdirSync(assetsDir).forEach(item => {
+      const srcPath = path.join(assetsDir, item);
+      const destPath = path.join(assetsDest, item);
+      // Only copy if destination doesn't exist or is different
+      if (!fs.existsSync(destPath)) {
+        copyRecursiveSync(srcPath, destPath);
+      }
+    });
+    console.log('✓ Static assets copied from assets directory to root');
+  } catch (error) {
+    console.warn('⚠ Error copying assets:', error.message);
+  }
 }
 
-// Create _routes.json to route all requests to the Worker
-// OpenNext bundles static assets into the Worker, so it must handle all requests
+// Create _routes.json to route requests to the Worker
+// Exclude static assets so they're served directly by Cloudflare Pages CDN (faster and more reliable)
 const routesPath = path.join('.open-next', '_routes.json');
 const routesConfig = {
   version: 1,
   include: ['/*'],
-  exclude: []  // Worker handles everything including static assets
+  exclude: [
+    '/_next/static/*',  // Next.js static assets (JS bundles, CSS) - serve from CDN
+    '/_next/image*',    // Next.js image optimization
+    '/favicon.ico',
+    '/favicon.svg',
+    '/favicon-*.png',
+    '/apple-touch-icon.png',
+    '/site.webmanifest'
+  ]
 };
 
 fs.writeFileSync(routesPath, JSON.stringify(routesConfig, null, 2));
