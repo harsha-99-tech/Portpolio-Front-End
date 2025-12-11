@@ -18,6 +18,8 @@ The `@opennextjs/cloudflare` package has been installed. This adapter allows Nex
 The following files have been created/updated:
 - `wrangler.toml` - Cloudflare Workers configuration
 - `open-next.config.ts` - OpenNext Cloudflare adapter configuration (required for builds)
+  - Includes `default` configuration with `cloudflare-node` wrapper
+  - Includes `middleware` configuration with `cloudflare-edge` wrapper for proper Next.js middleware support
 - `package.json` - Updated with deployment scripts
 
 ## Step 3: Deploy via Cloudflare Dashboard
