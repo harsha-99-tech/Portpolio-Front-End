@@ -25,32 +25,31 @@ if (fs.existsSync(workerPath)) {
   console.log('✓ Worker also copied to _worker.js at root');
 }
 
+// Helper function to copy files/directories recursively
+const copyRecursiveSync = (src, dest) => {
+  const exists = fs.existsSync(src);
+  const stats = exists && fs.statSync(src);
+  const isDirectory = exists && stats.isDirectory();
+  if (isDirectory) {
+    if (!fs.existsSync(dest)) {
+      fs.mkdirSync(dest, { recursive: true });
+    }
+    fs.readdirSync(src).forEach(childItemName => {
+      copyRecursiveSync(
+        path.join(src, childItemName),
+        path.join(dest, childItemName)
+      );
+    });
+  } else {
+    fs.copyFileSync(src, dest);
+  }
+};
+
 // Check if static assets exist in assets directory and copy them to root
 const assetsDir = path.join('.open-next', 'assets');
 if (fs.existsSync(assetsDir)) {
   // OpenNext puts assets in .open-next/assets, but they need to be accessible at root
   // Copy assets from .open-next/assets to .open-next root so Worker can serve them
-  const copyRecursiveSync = (src, dest) => {
-    const exists = fs.existsSync(src);
-    const stats = exists && fs.statSync(src);
-    const isDirectory = exists && stats.isDirectory();
-    if (isDirectory) {
-      if (!fs.existsSync(dest)) {
-        fs.mkdirSync(dest, { recursive: true });
-      }
-      fs.readdirSync(src).forEach(childItemName => {
-        copyRecursiveSync(
-          path.join(src, childItemName),
-          path.join(dest, childItemName)
-        );
-      });
-    } else {
-      fs.copyFileSync(src, dest);
-    }
-  };
-  
-  // Copy assets from .open-next/assets to .open-next root
-  // This ensures assets are accessible at the paths Next.js expects (e.g., /_next/static/...)
   const assetsDest = path.join('.open-next');
   try {
     fs.readdirSync(assetsDir).forEach(item => {
@@ -64,6 +63,28 @@ if (fs.existsSync(assetsDir)) {
     console.log('✓ Static assets copied from assets directory to root');
   } catch (error) {
     console.warn('⚠ Error copying assets:', error.message);
+  }
+}
+
+// Copy public folder assets to .open-next root so they're accessible
+const publicDir = path.join('.', 'public');
+if (fs.existsSync(publicDir)) {
+  try {
+    fs.readdirSync(publicDir).forEach(item => {
+      // Skip .gitkeep and other hidden files
+      if (item.startsWith('.')) return;
+      
+      const srcPath = path.join(publicDir, item);
+      const destPath = path.join('.open-next', item);
+      
+      // Only copy if destination doesn't exist
+      if (!fs.existsSync(destPath)) {
+        copyRecursiveSync(srcPath, destPath);
+      }
+    });
+    console.log('✓ Public folder assets copied to output directory');
+  } catch (error) {
+    console.warn('⚠ Error copying public assets:', error.message);
   }
 }
 

@@ -82,14 +82,19 @@ The following files have been created/updated:
    - **Note**: Use `pages:build` (build only), not `deploy` (build + deploy). Cloudflare Pages will handle deployment automatically.
    - **Important**: If Cloudflare auto-detects Next.js and uses `@cloudflare/next-on-pages`, you must manually override the build command to use `npm run pages:build` instead.
 
-4. **Set Environment Variables**
+4. **Set Environment Variables** ⚠️ **CRITICAL - Required for MongoDB, Email, and Google Maps**
    - Go to **Settings** → **Environment variables**
    - Add each environment variable for **Production**, **Preview**, and **Branch** environments:
-     - `MONGODB_URI`
-     - `EMAILJS_SERVICE_ID`
-     - `EMAILJS_TEMPLATE_ID`
-     - `EMAILJS_PUBLIC_KEY`
-   - Click **Save** after adding each variable
+     - `MONGODB_URI` (or `MONGO_URI`) - Your MongoDB Atlas connection string
+     - `EMAILJS_SERVICE_ID` - Your EmailJS service ID
+     - `EMAILJS_TEMPLATE_ID` - Your EmailJS template ID
+     - `EMAILJS_PUBLIC_KEY` - Your EmailJS public key
+     - `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` - Your Google Maps API key (for the map in Contact section)
+   - **Important**: 
+     - Variables starting with `NEXT_PUBLIC_` are exposed to the browser
+     - All other variables are server-side only
+     - Click **Save** after adding each variable
+     - **You must set these for the site to work properly!**
 
 5. **Deploy**
    - Click **Save and Deploy**
