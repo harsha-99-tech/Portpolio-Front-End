@@ -3,8 +3,7 @@ compatibility_date = "2024-12-11"
 compatibility_flags = ["nodejs_compat"]
 
 # For Cloudflare Pages deployment
-# The build output will be in .open-next directory
-# Cloudflare Pages will automatically detect the output
+pages_build_output_dir = ".open-next/cloudflare-static"
 
 # Environment variables can be set in Cloudflare dashboard
 # or via wrangler secret put command
