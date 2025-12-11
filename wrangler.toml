@@ -1,6 +1,6 @@
 name = "portpolio-harsha"
 compatibility_date = "2024-12-11"
-node_compat = true
+compatibility_flags = ["nodejs_compat"]
 
 # For Cloudflare Pages deployment
 # The build output will be in .open-next directory
