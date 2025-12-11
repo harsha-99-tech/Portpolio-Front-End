@@ -17,6 +17,7 @@ The `@opennextjs/cloudflare` package has been installed. This adapter allows Nex
 
 The following files have been created/updated:
 - `wrangler.toml` - Cloudflare Workers configuration
+- `open-next.config.ts` - OpenNext Cloudflare adapter configuration (required for builds)
 - `package.json` - Updated with deployment scripts
 
 ## Step 3: Deploy via Cloudflare Dashboard
@@ -126,6 +127,7 @@ The following files have been created/updated:
 - Check build logs in Cloudflare dashboard
 - Ensure all environment variables are set
 - Verify Node.js version compatibility (Cloudflare uses Node 18+)
+- **Missing `open-next.config.ts`**: If you see an error about missing config file, ensure `open-next.config.ts` exists in your project root. This file is required for the build process.
 
 ### API Routes Not Working
 - Check that API routes are in `src/app/api/` directory
