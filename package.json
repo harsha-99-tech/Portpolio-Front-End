@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "pages:build": "opennextjs-cloudflare build --openNextConfigPath open-next.config.ts",
+    "pages:build": "opennextjs-cloudflare build --openNextConfigPath open-next.config.ts && node scripts/setup-pages.js",
     "preview": "npm run pages:build && opennextjs-cloudflare preview",
     "deploy": "npm run pages:build && opennextjs-cloudflare deploy"
   },
