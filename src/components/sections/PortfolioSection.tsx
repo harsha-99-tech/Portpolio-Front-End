@@ -14,23 +14,22 @@ interface Project {
   link?: string;
 }
 
+type TabKey = "App Dev." | "Web Dev." | "Graphic Design" | "UI Design" | "Other";
+
 const PortfolioSection = () => {
   const { darkMode } = useTheme();
 
-  const tabs = ["App Dev.", "Web Dev.", "Graphic Design", "UI Design", "Other"];
+  const tabs: TabKey[] = ["App Dev.", "Web Dev.", "Graphic Design", "UI Design", "Other"];
 
-  const tabMapping = useMemo(
-    () => ({
-      "App Dev.": "app",
-      "Web Dev.": "web",
-      "Graphic Design": "graphic",
-      "UI Design": "ui",
-      Other: "ot",
-    }),
-    []
-  );
+  const tabMapping: Record<TabKey, string> = {
+    "App Dev.": "app",
+    "Web Dev.": "web",
+    "Graphic Design": "graphic",
+    "UI Design": "ui",
+    Other: "ot",
+  };
 
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [activeTab, setActiveTab] = useState<TabKey>(tabs[0]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +60,7 @@ const PortfolioSection = () => {
     };
 
     fetchProjects();
-  }, [activeTab, tabMapping]);
+  }, [activeTab]);
 
   return (
     <section className="min-h-screen py-4 transition-colors duration-500 relative">
