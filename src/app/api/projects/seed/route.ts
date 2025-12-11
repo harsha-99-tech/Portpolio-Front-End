@@ -1,6 +1,26 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
-import Project from '@/models/Project';
+import { APP, WEB, GRAPHIC, UI, OT } from '@/models/Project';
+
+/**
+ * Maps category names to their respective Mongoose models.
+ */
+const getModelByCategory = (category: string) => {
+  switch (category) {
+    case 'app':
+      return APP;
+    case 'web':
+      return WEB;
+    case 'graphic':
+      return GRAPHIC;
+    case 'ui':
+      return UI;
+    case 'ot':
+      return OT;
+    default:
+      return null;
+  }
+};
 
 const seedProjects = [
   // App Development Projects
@@ -61,17 +81,34 @@ export async function POST() {
   try {
     await connectDB();
     
-    // Clear existing projects (optional - remove if you want to keep existing data)
-    // await Project.deleteMany({});
+    const results = [];
     
-    // Insert seed projects
-    const projects = await Project.insertMany(seedProjects);
+    // Group projects by category
+    const projectsByCategory = seedProjects.reduce((acc, project) => {
+      const category = project.category;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(project);
+      return acc;
+    }, {} as Record<string, typeof seedProjects>);
+    
+    // Insert projects into their respective collections
+    for (const [category, projects] of Object.entries(projectsByCategory)) {
+      const model = getModelByCategory(category);
+      if (model) {
+        // Remove category field before inserting (it's not part of the schema)
+        const projectsToInsert = projects.map(({ category, ...rest }) => rest);
+        const inserted = await model.insertMany(projectsToInsert);
+        results.push(...inserted);
+      }
+    }
 
     return NextResponse.json(
       { 
         success: true, 
-        message: `Successfully seeded ${projects.length} projects`,
-        data: projects 
+        message: `Successfully seeded ${results.length} projects`,
+        data: results 
       },
       { status: 201 }
     );

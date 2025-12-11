@@ -75,9 +75,11 @@ The following files have been created/updated:
    - Select your repository
 
 3. **Configure Build Settings**
+   - **Framework preset**: Select **None** or **Custom** (do NOT use "Next.js" preset as it uses deprecated `@cloudflare/next-on-pages`)
    - **Build command**: `npm run pages:build` (or `npm install && npm run pages:build`)
    - **Root directory**: `/` (leave empty if root)
    - **Note**: Use `pages:build` (build only), not `deploy` (build + deploy). Cloudflare will handle deployment automatically.
+   - **Important**: If Cloudflare auto-detects Next.js and uses `@cloudflare/next-on-pages`, you must manually override the build command to use `npm run pages:build` instead.
 
 4. **Set Environment Variables**
    - Go to **Settings** → **Variables and Secrets**
