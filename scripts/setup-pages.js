@@ -93,20 +93,9 @@ if (fs.existsSync(publicDir)) {
     // First, collect all file paths for routing
     processPublicFiles(publicDir);
     
-    // Then copy all files from public to output directory
-    fs.readdirSync(publicDir).forEach(item => {
-      if (item.startsWith('.')) return; // Skip hidden files
-      
-      const srcPath = path.join(publicDir, item);
-      const destPath = path.join('.open-next', item);
-      
-      // Only copy if destination doesn't exist
-      if (!fs.existsSync(destPath)) {
-        copyRecursiveSync(srcPath, destPath);
-      }
-    });
-    
-    console.log('✓ Public folder assets copied to output directory');
+    // Then copy the entire public folder into the output directory (preserve subdirectories)
+    copyRecursiveSync(publicDir, '.open-next');
+    console.log('✓ Public folder assets copied (recursive) to output directory');
   } catch (error) {
     console.warn('⚠ Error processing public assets:', error.message);
   }

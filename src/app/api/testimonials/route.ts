@@ -22,8 +22,13 @@ export async function GET() {
     return NextResponse.json(formattedTestimonials, { status: 200 });
   } catch (error) {
     console.error('Error fetching testimonials:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { message: 'Error fetching testimonials' },
+      { 
+        message: 'Error fetching testimonials',
+        error: errorMessage,
+        hasMongoUri: !!(process.env.MONGODB_URI || process.env.MONGO_URI)
+      },
       { status: 500 }
     );
   }

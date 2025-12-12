@@ -55,8 +55,13 @@ export async function GET(
     return NextResponse.json(formattedItems, { status: 200 });
   } catch (error) {
     console.error('Error fetching items:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { message: 'Error fetching items' },
+      { 
+        message: 'Error fetching items',
+        error: errorMessage,
+        hasMongoUri: !!(process.env.MONGODB_URI || process.env.MONGO_URI)
+      },
       { status: 500 }
     );
   }

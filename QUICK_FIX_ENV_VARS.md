@@ -1,40 +1,70 @@
 # Quick Fix: Environment Variables Not Working
 
-## If you've added environment variables but they're still not working:
+## ⚠️ IMPORTANT: Your project uses wrangler.toml
 
-### Method 1: Use Wrangler CLI (Most Reliable)
+If you see this message in Cloudflare Dashboard:
+> "Environment variables for this project are being managed through wrangler.toml. Only Secrets (encrypted variables) can be managed via the Dashboard."
 
-This is often more reliable than the dashboard:
+**This means you MUST use Wrangler CLI to set secrets.** The dashboard won't work for regular environment variables.
 
-1. **Install Wrangler** (if not already installed):
-   ```bash
-   npm install -g wrangler
-   ```
+## Solution: Use Wrangler CLI to Set Secrets
 
-2. **Login to Cloudflare**:
-   ```bash
-   wrangler login
-   ```
-   This will open your browser to authenticate.
+### Step 1: Install Wrangler (if not already installed)
 
-3. **Set environment variables as secrets**:
-   ```bash
-   # Navigate to your project directory
-   cd C:\Users\DELL\Desktop\Personal\NextJS\Portpolio-Front-End
-   
-   # Set each secret (you'll be prompted to paste the value)
-   wrangler pages secret put MONGODB_URI --project-name=harsha-nawana
-   wrangler pages secret put EMAILJS_SERVICE_ID --project-name=harsha-nawana
-   wrangler pages secret put EMAILJS_TEMPLATE_ID --project-name=harsha-nawana
-   wrangler pages secret put EMAILJS_PUBLIC_KEY --project-name=harsha-nawana
-   wrangler pages secret put NEXT_PUBLIC_GOOGLE_MAPS_API_KEY --project-name=harsha-nawana
-   ```
+```bash
+npm install -g wrangler
+```
 
-   **Note**: Replace `harsha-nawana` with your actual Cloudflare Pages project name if different.
+### Step 2: Login to Cloudflare
 
-4. **After setting secrets, trigger a new deployment**:
-   - Go to Cloudflare Dashboard → Your Project → Deployments
-   - Click **Retry deployment** on the latest deployment
+```bash
+wrangler login
+```
+This will open your browser to authenticate with Cloudflare.
+
+### Step 3: Set Each Secret
+
+**Important**: You need to know your Cloudflare Pages project name. It's usually:
+- The name shown in the Cloudflare Dashboard
+- Or check your site URL: `https://YOUR-PROJECT-NAME.pages.dev`
+
+Run these commands (replace `harsha-nawana` with your actual project name):
+
+```bash
+# Navigate to your project directory (you're probably already there)
+cd C:\Users\DELL\Desktop\Personal\NextJS\Portpolio-Front-End
+
+# Set each secret (you'll be prompted to paste the value)
+wrangler pages secret put MONGODB_URI --project-name=harsha-nawana
+wrangler pages secret put EMAILJS_SERVICE_ID --project-name=harsha-nawana
+wrangler pages secret put EMAILJS_TEMPLATE_ID --project-name=harsha-nawana
+wrangler pages secret put EMAILJS_PUBLIC_KEY --project-name=harsha-nawana
+wrangler pages secret put NEXT_PUBLIC_GOOGLE_MAPS_API_KEY --project-name=harsha-nawana
+```
+
+**For each command:**
+1. It will prompt: `Enter the secret value for MONGODB_URI:`
+2. Paste your value and press Enter
+3. It will confirm: `✨ Success! Uploaded secret MONGODB_URI`
+
+### Step 4: Verify Secrets Are Set
+
+You can list all secrets:
+```bash
+wrangler pages secret list --project-name=harsha-nawana
+```
+
+This will show all secrets (but not their values, for security).
+
+### Step 5: Trigger New Deployment
+
+**CRITICAL**: Secrets only apply to NEW deployments!
+
+1. Go to Cloudflare Dashboard → Your Project → **Deployments**
+2. Click **Retry deployment** on the latest deployment
+3. OR push a new commit to trigger automatic deployment
+
+**Wait for deployment to complete**, then test your API endpoints.
 
 ### Method 2: Verify Variables Are Set Correctly
 
