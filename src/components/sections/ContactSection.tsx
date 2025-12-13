@@ -1,9 +1,23 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTheme } from "@/contexts/ThemeContext";
+
+// Initialize EmailJS once
+const emailjsConfig = (() => {
+  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+  const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+  if (serviceId && templateId && publicKey) {
+    // Initialize EmailJS with the public key
+    emailjs.init(publicKey);
+    return { serviceId, templateId, publicKey };
+  }
+  return null;
+})();
 
 const ContactSection = () => {
   const { darkMode } = useTheme();
@@ -18,48 +32,6 @@ const ContactSection = () => {
   const [isSending, setIsSending] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoadingConfig, setIsLoadingConfig] = useState(true);
-  const [emailjsConfig, setEmailjsConfig] = useState<{
-    serviceId: string;
-    templateId: string;
-    publicKey: string;
-  } | null>(null);
-
-  useEffect(() => {
-    const fetchEmailjsConfig = async () => {
-      setIsLoadingConfig(true);
-      try {
-        const response = await fetch(`/api/emailjs-config`);
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || "Failed to fetch EmailJS configuration");
-        }
-
-        const config = await response.json();
-        console.log("Received EmailJS Config:", config);
-
-        // Validate config has all required fields
-        if (!config.serviceId || !config.templateId || !config.publicKey) {
-          throw new Error("EmailJS configuration is incomplete. Please check your environment variables.");
-        }
-
-        // Initialize EmailJS with the public key
-        emailjs.init(config.publicKey);
-
-        setEmailjsConfig(config);
-        setErrorMessage(""); // Clear any previous errors
-      } catch (error) {
-        console.error("Error fetching EmailJS config:", error);
-        const errorMessage = error instanceof Error ? error.message : "Failed to load email configuration.";
-        setErrorMessage(errorMessage);
-        setEmailjsConfig(null);
-      } finally {
-        setIsLoadingConfig(false);
-      }
-    };
-
-    fetchEmailjsConfig();
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -314,11 +286,9 @@ const ContactSection = () => {
                       ? "bg-blue-500 hover:bg-blue-600 text-gray-100"
                       : "bg-blue-600 hover:bg-blue-700 text-gray-100"
                   }`}
-                  disabled={isSending || isLoadingConfig || !emailjsConfig}
+                  disabled={isSending || !emailjsConfig}
                 >
-                  {isLoadingConfig
-                    ? "Loading..."
-                    : isSending
+                  {isSending
                     ? "Sending..."
                     : !emailjsConfig
                     ? "Email service unavailable"

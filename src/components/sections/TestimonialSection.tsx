@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import TestimonialCard from "@/components/cards/TestimonialCard";
 import { useTheme } from "@/contexts/ThemeContext";
+import { testimonials } from "@/data/testimonials";
 
 interface Testimonial {
   _id: string;
@@ -16,30 +17,6 @@ interface Testimonial {
 
 const TestimonialSection = () => {
   const { darkMode } = useTheme();
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      setLoading(true);
-
-      try {
-        const response = await fetch("/api/testimonials");
-        if (!response.ok) {
-          throw new Error("Failed to fetch testimonials");
-        }
-        const data = await response.json();
-        setTestimonials(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error("Error fetching testimonials:", error);
-        setTestimonials([]);
-      }
-
-      setLoading(false);
-    };
-
-    fetchTestimonials();
-  }, []);
 
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -59,23 +36,7 @@ const TestimonialSection = () => {
           What People Say About Us
         </h2>
 
-        {/* Loading State */}
-        {loading ? (
-          <div className="flex justify-center items-center space-x-4">
-            <div
-              className={`spinner-border animate-spin inline-block w-16 h-16 border-4 rounded-full ${
-                darkMode
-                  ? "border-t-blue-500 border-gray-700"
-                  : "border-t-blue-600 border-gray-200"
-              }`}
-            ></div>
-            <p
-              className={`text-lg ${darkMode ? "text-white" : "text-gray-900"}`}
-            >
-              Loading...
-            </p>
-          </div>
-        ) : testimonials.length > 0 ? (
+        {testimonials.length > 0 ? (
           <div className="relative flex flex-col items-center justify-center p-10">
             <div className="relative max-w-6xl w-full px-12">
               <Swiper

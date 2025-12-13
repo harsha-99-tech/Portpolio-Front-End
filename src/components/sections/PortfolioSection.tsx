@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import ProjectCard from "@/components/cards/ProjectCard";
+import { projectsByCategory, StaticProject } from "@/data/projects";
 
 interface Project {
   _id: string;
@@ -30,36 +31,11 @@ const PortfolioSection = () => {
   };
 
   const [activeTab, setActiveTab] = useState<TabKey>(tabs[0]);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const category = tabMapping[activeTab];
-        const response = await fetch(`/api/projects/${category}`);
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-
-        const data = await response.json();
-        // API returns array directly (matching your backend format)
-        setProjects(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-        setError("Failed to load projects. Please try again later.");
-        setProjects([]);
-      }
-
-      setLoading(false);
-    };
-
-    fetchProjects();
+  // Use static data instead of API
+  const projects = useMemo(() => {
+    const category = tabMapping[activeTab];
+    return projectsByCategory[category] || [];
   }, [activeTab]);
 
   return (
@@ -94,44 +70,7 @@ const PortfolioSection = () => {
 
         {/* Projects Container with fixed or min-height */}
         <div className="min-h-[500px] flex justify-center items-center relative z-10">
-          {/* Loading state */}
-          {loading ? (
-            <div className="flex justify-center items-center space-x-4">
-              <div
-                className={`w-16 h-16 border-4 border-t-blue-500 ${
-                  darkMode ? "border-gray-700" : "border-gray-200"
-                } rounded-full animate-spin`}
-              ></div>
-              <p
-                className={`text-lg ${
-                  darkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                Loading...
-              </p>
-            </div>
-          ) : error ? (
-            <div
-              className={`text-lg mt-6 ${
-                darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
-              <p
-                className={`text-xl font-semibold mb-4 ${
-                  darkMode ? "text-gray-100" : "text-gray-900"
-                }`}
-              >
-                {error}
-              </p>
-              <p
-                className={`text-md ${
-                  darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                We're constantly adding new ones, stay tuned!
-              </p>
-            </div>
-          ) : projects.length > 0 ? (
+          {projects.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project) => (
                 <ProjectCard key={project._id || project.project} project={project} />
