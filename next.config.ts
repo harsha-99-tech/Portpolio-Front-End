@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Remove 'output: export' when using OpenNext Cloudflare adapter
+  // OpenNext handles the output configuration
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true, // Disable Next.js image optimization for Cloudflare Pages
     remotePatterns: [
       {
         protocol: "https",

@@ -77,14 +77,15 @@ if (fs.existsSync(publicDir)) {
         if (item.startsWith('.')) return; // Skip hidden files
         
         const fullPath = path.join(dir, item);
-        const relativePath = basePath ? `${basePath}/${item}` : `/${item}`;
         const stat = fs.statSync(fullPath);
         
         if (stat.isDirectory()) {
           // Recursively process subdirectories
-          processPublicFiles(fullPath, relativePath);
+          const newBasePath = basePath ? `${basePath}/${item}` : `/${item}`;
+          processPublicFiles(fullPath, newBasePath);
         } else {
           // Add file to routing exclusion list
+          const relativePath = basePath ? `${basePath}/${item}` : `/${item}`;
           publicFiles.push(relativePath);
         }
       });
@@ -96,6 +97,7 @@ if (fs.existsSync(publicDir)) {
     // Then copy the entire public folder into the output directory (preserve subdirectories)
     copyRecursiveSync(publicDir, '.open-next');
     console.log('✓ Public folder assets copied (recursive) to output directory');
+    console.log(`✓ Found ${publicFiles.length} public files to exclude from routing`);
   } catch (error) {
     console.warn('⚠ Error processing public assets:', error.message);
   }
@@ -111,13 +113,24 @@ const routesConfig = {
   exclude: [
     '/_next/static/*',  // Next.js static assets (JS bundles, CSS) - serve from CDN
     '/_next/image*',    // Next.js image optimization
+    // Image file extensions - exclude from Worker routing
+    '/*.png',
+    '/*.jpg',
+    '/*.jpeg',
+    '/*.gif',
+    '/*.webp',
+    '/*.svg',
+    '/*.ico',
+    // Common public files
     '/favicon.ico',
     '/favicon.svg',
     '/favicon-*.png',
     '/apple-touch-icon.png',
     '/site.webmanifest',
-    // Exclude all public folder files
-    ...publicFiles
+    // Exclude all public folder files (specific paths)
+    ...publicFiles,
+    // Exclude images directory and subdirectories
+    '/images/*'
   ]
 };
 
