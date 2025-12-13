@@ -94,8 +94,13 @@ Then reference them in your data files (e.g., `/images/projects/my-project.jpg`)
 Before pushing, test the static build locally:
 
 ```bash
-npm run build
+npm run build:static
 ```
+
+This will:
+1. Temporarily move API routes (which aren't supported in static export)
+2. Build the static site
+3. Restore the API routes
 
 This will create an `out` folder with the static files. You can serve it locally using:
 

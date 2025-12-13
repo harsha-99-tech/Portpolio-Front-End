@@ -35,7 +35,12 @@ const PortfolioSection = () => {
   // Use static data instead of API
   const projects = useMemo(() => {
     const category = tabMapping[activeTab];
-    return projectsByCategory[category] || [];
+    const staticProjects = projectsByCategory[category] || [];
+    // Convert StaticProject to Project format (convert null to undefined for image)
+    return staticProjects.map((p) => ({
+      ...p,
+      image: p.image ?? undefined,
+    }));
   }, [activeTab]);
 
   return (

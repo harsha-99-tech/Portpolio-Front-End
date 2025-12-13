@@ -41,7 +41,7 @@ jobs:
           NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
           # For GitHub Pages, set basePath to repository name (without username)
           NEXT_PUBLIC_BASE_PATH: /Portpolio-Front-End
-        run: npm run build
+        run: npm run build:static
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
