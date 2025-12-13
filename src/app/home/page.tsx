@@ -8,12 +8,14 @@ import TestimonialSection from "@/components/sections/TestimonialSection";
 import { useTheme } from "@/contexts/ThemeContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FloatingSocialLinks from "@/components/FloatingSocialLinks";
 
 const Home = () => {
   const { darkMode } = useTheme();
   return (
     <>
       <Header />
+      <FloatingSocialLinks />
       <div
         className={`relative min-h-screen flex flex-col items-center justify-start transition-colors duration-500 ${
           darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-100 text-gray-900"

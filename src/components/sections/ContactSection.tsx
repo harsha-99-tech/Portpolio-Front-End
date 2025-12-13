@@ -1,23 +1,15 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTheme } from "@/contexts/ThemeContext";
 
-// Initialize EmailJS once
-const emailjsConfig = (() => {
-  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-  const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-  if (serviceId && templateId && publicKey) {
-    // Initialize EmailJS with the public key
-    emailjs.init(publicKey);
-    return { serviceId, templateId, publicKey };
-  }
-  return null;
-})();
+interface EmailJSConfig {
+  serviceId: string;
+  templateId: string;
+  publicKey: string;
+}
 
 const ContactSection = () => {
   const { darkMode } = useTheme();
@@ -32,6 +24,47 @@ const ContactSection = () => {
   const [isSending, setIsSending] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [emailjsConfig, setEmailjsConfig] = useState<EmailJSConfig | null>(null);
+  const [isLoadingConfig, setIsLoadingConfig] = useState(true);
+
+  // Fetch EmailJS config from API or use environment variables
+  useEffect(() => {
+    const loadEmailJSConfig = async () => {
+      // First, try to use NEXT_PUBLIC_ environment variables (if available)
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (serviceId && templateId && publicKey) {
+        emailjs.init(publicKey);
+        setEmailjsConfig({ serviceId, templateId, publicKey });
+        setIsLoadingConfig(false);
+        return;
+      }
+
+      // If not available, try to fetch from API route
+      try {
+        const response = await fetch("/api/emailjs-config");
+        if (response.ok) {
+          const config = await response.json();
+          if (config.serviceId && config.templateId && config.publicKey) {
+            emailjs.init(config.publicKey);
+            setEmailjsConfig({
+              serviceId: config.serviceId,
+              templateId: config.templateId,
+              publicKey: config.publicKey,
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load EmailJS config:", error);
+      } finally {
+        setIsLoadingConfig(false);
+      }
+    };
+
+    loadEmailJSConfig();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -286,15 +319,22 @@ const ContactSection = () => {
                       ? "bg-blue-500 hover:bg-blue-600 text-gray-100"
                       : "bg-blue-600 hover:bg-blue-700 text-gray-100"
                   }`}
-                  disabled={isSending || !emailjsConfig}
+                  disabled={isSending || !emailjsConfig || isLoadingConfig}
                 >
-                  {isSending
+                  {isLoadingConfig
+                    ? "Loading..."
+                    : isSending
                     ? "Sending..."
                     : !emailjsConfig
                     ? "Email service unavailable"
                     : "Send Message"}
                 </button>
               </div>
+              {!emailjsConfig && !isLoadingConfig && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                  Please configure EmailJS environment variables
+                </p>
+              )}
             </div>
             {successMessage && (
               <p className="text-emerald-300 text-center mt-4 font-medium animate-fadeIn bg-emerald-900/20 py-3 rounded-lg">
