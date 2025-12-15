@@ -31,10 +31,36 @@ const config: Config = {
             opacity: '1' 
           },
         },
+        'ripple': {
+          'to': {
+            width: '300px',
+            height: '300px',
+            opacity: '0',
+          },
+        },
+        'gradient-shift': {
+          '0%, 100%': {
+            backgroundPosition: '0% 50%',
+          },
+          '50%': {
+            backgroundPosition: '100% 50%',
+          },
+        },
+        'shimmer': {
+          '0%': {
+            backgroundPosition: '-200% 0',
+          },
+          '100%': {
+            backgroundPosition: '200% 0',
+          },
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.5s ease-out both',
         'float': 'float 3s ease-in-out infinite',
+        'ripple': 'ripple 0.6s ease-out forwards',
+        'gradient-shift': 'gradient-shift 3s ease infinite',
+        'shimmer': 'shimmer 2s linear infinite',
       },
     },
   },

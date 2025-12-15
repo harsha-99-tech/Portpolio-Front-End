@@ -5,6 +5,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import PortfolioSection from "@/components/sections/PortfolioSection";
 import ProfileSection from "@/components/sections/ProfileSection";
 import TestimonialSection from "@/components/sections/TestimonialSection";
+import InteractiveDemosSection from "@/components/sections/InteractiveDemosSection";
 import { useTheme } from "@/contexts/ThemeContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -54,6 +55,11 @@ const Home = () => {
           className="w-full px-6 md:px-12 container mx-auto relative z-10"
         >
           <PortfolioSection />
+        </div>
+
+        {/* Interactive Demos Section */}
+        <div className="w-full px-6 md:px-12 container mx-auto relative z-10">
+          <InteractiveDemosSection />
         </div>
 
         {/* Testimonials Section */}

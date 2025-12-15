@@ -9,6 +9,7 @@ import {
   FaCode,
   FaRocket,
   FaAward,
+  FaCheck,
 } from "react-icons/fa";
 import { useTheme } from "@/contexts/ThemeContext";
 import EducationTimeline from "./EducationTimeline";
@@ -146,10 +147,10 @@ const ProfileSection = () => {
     { name: "InDesign", icon: "https://img.icons8.com/color/48/000000/adobe-indesign.png" },
     { name: "Canva", icon: "https://img.icons8.com/color/48/000000/canva.png" },
     { name: "DaVinci Resolve", icon: "https://img.icons8.com/color/48/000000/davinci-resolve.png" },
-    { name: "Stripo", icon: "https://assets.stripo.email/static/assets/img/favicon/favicon-32x32.png" },
+    { name: "Stripo", icon: "/Stripo.png" },
     { name: "Mailchimp", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/mailchimp.svg" },
-    { name: "Email on Acid", icon: "https://www.emailonacid.com/wp-content/uploads/2020/10/cropped-favicon-512x512-1.png" },
-    { name: "EmailJS", icon: "https://www.emailjs.com/assets/img/logo.png" },
+    { name: "Email on Acid", icon: "/emailonacid.png" },
+    { name: "EmailJS", icon: "/emailjs.png" },
     { name: "VS Code", icon: "https://img.icons8.com/color/48/visual-studio-code-2019.png" },
     { name: "WordPress", icon: "https://img.icons8.com/color/48/wordpress.png" },
     { name: "Cloudflare", icon: "https://img.icons8.com/color/48/cloudflare.png" },
@@ -159,30 +160,8 @@ const ProfileSection = () => {
   return (
     <section
       id="profile-section"
-      className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
+      className="relative min-h-screen py-20 transition-colors duration-500"
     >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          className={`absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl opacity-20 animate-pulse ${
-            darkMode ? "bg-blue-500" : "bg-blue-300"
-          }`}
-          style={{ animationDuration: "4s" }}
-        ></div>
-        <div
-          className={`absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl opacity-20 animate-pulse ${
-            darkMode ? "bg-purple-500" : "bg-purple-300"
-          }`}
-          style={{ animationDuration: "5s", animationDelay: "1s" }}
-        ></div>
-        <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-3xl opacity-10 animate-pulse ${
-            darkMode ? "bg-pink-500" : "bg-pink-300"
-          }`}
-          style={{ animationDuration: "6s", animationDelay: "2s" }}
-        ></div>
-      </div>
-
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Header Section */}
         <div
@@ -192,13 +171,30 @@ const ProfileSection = () => {
         >
           <h2 className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
             About Me
-          </h2>
+        </h2>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
             I am a passionate{" "}
             <span className="font-bold text-blue-500">developer</span> and{" "}
             <span className="font-bold text-purple-500">designer</span>, combining creativity and
             technology to build impactful solutions.
           </p>
+          {/* Core Skills inline, centered */}
+          <div className="mt-8 flex flex-wrap justify-center items-center gap-3 md:gap-4 text-base md:text-lg font-bold tracking-wide px-2">
+            {skills.map((skill, index) => (
+              <div key={skill} className="flex items-center whitespace-nowrap">
+                <span className={darkMode ? "text-white" : "text-gray-900"}>
+                  {skill.toUpperCase()}
+                </span>
+                {index !== skills.length - 1 && (
+                  <span
+                    className={`mx-4 h-4 w-px ${
+                      darkMode ? "bg-gray-700" : "bg-gray-300"
+                    }`}
+                  ></span>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
          {/* Stats Section - Enhanced Info Tiles */}
@@ -223,11 +219,11 @@ const ProfileSection = () => {
                    darkMode
                      ? "bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-gray-700/50 hover:border-gray-600"
                      : "bg-gradient-to-br from-white to-gray-50 border-gray-200/70 hover:border-gray-300 shadow-xl"
-                 }`}
+            }`}
                  style={{
                    animationDelay: `${index * 0.1}s`,
                  }}
-               >
+          >
                  {/* Animated gradient background */}
                  <div
                    className={`absolute inset-0 bg-gradient-to-br ${gradient.from} ${gradient.via} ${gradient.to} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
@@ -268,13 +264,13 @@ const ProfileSection = () => {
                      className={`text-5xl md:text-6xl font-extrabold mb-3 bg-gradient-to-r ${gradient.from} ${gradient.via} ${gradient.to} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}
                    >
                      {stat.value}
-                   </div>
+          </div>
 
                    {/* Label */}
-                   <div
+          <div
                      className={`text-base md:text-lg font-semibold uppercase tracking-wider ${
                        darkMode ? "text-gray-300" : "text-gray-600"
-                     }`}
+            }`}
                    >
                      {stat.label}
                    </div>
@@ -305,62 +301,18 @@ const ProfileSection = () => {
            })}
          </div>
 
-         {/* Core Skills Section - After Info Tiles */}
-         <div
-           className={`mb-16 transition-all duration-1000 delay-300 ${
-             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-           }`}
-         >
-           <div className="text-center mb-8">
-             <h3
-               className={`text-3xl md:text-4xl font-bold mb-3 ${
-                 darkMode ? "text-white" : "text-gray-900"
-               }`}
-             >
-               Core Skills
-             </h3>
-             <div
-               className={`h-1 w-24 mx-auto rounded-full ${
-                 darkMode ? "bg-gradient-to-r from-purple-500 to-pink-500" : "bg-gradient-to-r from-purple-400 to-pink-400"
-               }`}
-             ></div>
-           </div>
-           <div className="flex flex-wrap justify-center gap-4">
-             {skills.map((skill, index) => (
-               <div
-                 key={skill}
-                 className={`group relative px-6 py-3 rounded-full text-base font-medium transition-all duration-300 hover:scale-110 cursor-default ${
-                   darkMode
-                     ? "bg-gray-800/60 border border-gray-700/50 text-gray-200 hover:bg-gray-700/80 hover:border-purple-500/50 hover:text-purple-300 shadow-lg hover:shadow-purple-500/20"
-                     : "bg-white/80 border border-gray-200/70 text-gray-700 hover:bg-white hover:border-purple-400/70 hover:text-purple-600 shadow-md hover:shadow-purple-400/20"
-                 }`}
-                 style={{
-                   animationDelay: `${index * 0.05}s`,
-                 }}
-               >
-                 <span className="relative z-10">{skill}</span>
-                 {/* Subtle glow on hover */}
-                 <div
-                   className={`absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                     darkMode ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20" : "bg-gradient-to-r from-purple-400/20 to-pink-400/20"
-                   }`}
-                 ></div>
-               </div>
-             ))}
-           </div>
-         </div>
 
          {/* Education Timeline Section - Full Width Magical Timeline */}
          <div className="mb-16">
            <EducationTimeline />
-         </div>
+          </div>
 
          {/* Technologies & Design Tools Section - Combined */}
-         <div
+          <div
            className={`mb-16 transition-all duration-1000 delay-400 ${
              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
            }`}
-         >
+          >
            <div className="text-center mb-12">
              <h3
                className={`text-3xl md:text-4xl font-bold mb-4 ${
@@ -380,8 +332,8 @@ const ProfileSection = () => {
                    darkMode ? "bg-gradient-to-r from-orange-500 to-red-500" : "bg-gradient-to-r from-orange-400 to-red-400"
                  }`}
                ></div>
-             </div>
-           </div>
+            </div>
+          </div>
 
            {/* Unified Layout - Side by Side (Tech fixed, Tools wider) */}
            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto">
@@ -411,9 +363,9 @@ const ProfileSection = () => {
                  </h4>
                </div>
                <TechnologiesGrid technologies={softwares} darkMode={darkMode} colorTheme="orange" />
-             </div>
-           </div>
-         </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
