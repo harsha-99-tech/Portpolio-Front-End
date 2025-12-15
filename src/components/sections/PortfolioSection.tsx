@@ -54,8 +54,13 @@ const PortfolioSection = () => {
   useEffect(() => {
     if (swiperRef.current) {
       swiperRef.current.slideTo(0);
+      // Re-initialize navigation when tab changes
+      if (projects.length >= 3 && prevRef.current && nextRef.current) {
+        swiperRef.current.navigation.init();
+        swiperRef.current.navigation.update();
+      }
     }
-  }, [activeTab]);
+  }, [activeTab, projects.length]);
 
   return (
     <section className="min-h-screen py-4 transition-colors duration-500 relative">
@@ -91,121 +96,137 @@ const PortfolioSection = () => {
         <div className="min-h-[500px] flex justify-center items-center relative z-10 px-4">
           {projects.length > 0 ? (
             <div className="relative w-full max-w-7xl">
-              {/* Carousel */}
-              <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                onSwiper={(swiper) => {
-                  swiperRef.current = swiper;
-                }}
-                onBeforeInit={(swiper) => {
-                  if (prevRef.current && nextRef.current && paginationRef.current) {
-                    if (swiper.params.navigation && typeof swiper.params.navigation === 'object') {
-                      swiper.params.navigation.prevEl = prevRef.current;
-                      swiper.params.navigation.nextEl = nextRef.current;
-                    }
-                    if (swiper.params.pagination && typeof swiper.params.pagination === 'object') {
-                      swiper.params.pagination.el = paginationRef.current;
-                    }
-                  }
-                }}
-                onInit={(swiper) => {
-                  if (prevRef.current && nextRef.current && paginationRef.current) {
-                    swiper.navigation.init();
-                    swiper.pagination.init();
-                  }
-                }}
-                loop={projects.length >= 3}
-                spaceBetween={30}
-                slidesPerView={1}
-                breakpoints={{
-                  640: {
-                    slidesPerView: projects.length >= 2 ? 2 : 1,
-                    spaceBetween: 20,
-                  },
-                  1024: {
-                    slidesPerView: projects.length >= 3 ? 3 : projects.length >= 2 ? 2 : 1,
-                    spaceBetween: 30,
-                  },
-                }}
-                pagination={{
-                  el: paginationRef.current,
-                  clickable: true,
-                  dynamicBullets: true,
-                }}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                autoplay={{
-                  delay: 4000,
-                  disableOnInteraction: false,
-                  pauseOnMouseEnter: true,
-                }}
-                className="pb-16"
-              >
-                {projects.map((project) => (
-                  <SwiperSlide key={project._id || project.project} className="h-auto">
-                    <div className="h-full flex items-stretch">
+              {projects.length >= 3 ? (
+                <>
+                  {/* Carousel - Only show when 3+ projects */}
+                  <Swiper
+                    key={`swiper-${activeTab}-${projects.length}`}
+                    modules={[Navigation, Pagination, Autoplay]}
+                    onSwiper={(swiper) => {
+                      swiperRef.current = swiper;
+                    }}
+                    onBeforeInit={(swiper) => {
+                      if (prevRef.current && nextRef.current && paginationRef.current) {
+                        if (swiper.params.navigation && typeof swiper.params.navigation === 'object') {
+                          swiper.params.navigation.prevEl = prevRef.current;
+                          swiper.params.navigation.nextEl = nextRef.current;
+                        }
+                        if (swiper.params.pagination && typeof swiper.params.pagination === 'object') {
+                          swiper.params.pagination.el = paginationRef.current;
+                        }
+                      }
+                    }}
+                    onInit={(swiper) => {
+                      if (prevRef.current && nextRef.current && paginationRef.current && projects.length >= 3) {
+                        swiper.navigation.init();
+                        swiper.pagination.init();
+                      }
+                    }}
+                    loop={projects.length >= 3}
+                    spaceBetween={30}
+                    slidesPerView={1}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                      },
+                      1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                      },
+                    }}
+                    pagination={projects.length >= 3 ? {
+                      el: paginationRef.current,
+                      clickable: true,
+                      dynamicBullets: true,
+                    } : false}
+                    navigation={projects.length >= 3 ? {
+                      prevEl: prevRef.current,
+                      nextEl: nextRef.current,
+                    } : false}
+                    autoplay={projects.length >= 3 ? {
+                      delay: 4000,
+                      disableOnInteraction: false,
+                      pauseOnMouseEnter: true,
+                    } : false}
+                    className="pb-16"
+                  >
+                    {projects.map((project) => (
+                      <SwiperSlide key={project._id || project.project} className="h-auto">
+                        <div className="h-full flex items-stretch">
+                          <ProjectCard project={project} />
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+
+                  {/* Navigation Buttons - Moved further out, only show when 3+ projects */}
+                  {projects.length >= 3 && (
+                    <>
+                      <button
+                        ref={prevRef}
+                        className={`portfolio-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 md:-translate-x-16 lg:-translate-x-20 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 transition-all duration-300 z-20 ${
+                          darkMode
+                            ? "bg-gray-800 text-gray-300 border-gray-700 hover:bg-blue-600 hover:border-blue-500 hover:text-white"
+                            : "bg-white text-blue-500 border-gray-300 hover:bg-blue-500 hover:border-blue-500 hover:text-white shadow-lg"
+                        }`}
+                        aria-label="Previous projects"
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 19l-7-7 7-7"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        ref={nextRef}
+                        className={`portfolio-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-8 md:translate-x-16 lg:translate-x-20 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 transition-all duration-300 z-20 ${
+                          darkMode
+                            ? "bg-gray-800 text-gray-300 border-gray-700 hover:bg-blue-600 hover:border-blue-500 hover:text-white"
+                            : "bg-white text-blue-500 border-gray-300 hover:bg-blue-500 hover:border-blue-500 hover:text-white shadow-lg"
+                        }`}
+                        aria-label="Next projects"
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    </>
+                  )}
+
+                  {/* Pagination - only show when 3+ projects */}
+                  {projects.length >= 3 && (
+                    <div ref={paginationRef} className="portfolio-pagination mt-8"></div>
+                  )}
+                </>
+              ) : (
+                /* Simple Grid Layout - When less than 3 projects */
+                <div className={`grid grid-cols-1 ${projects.length === 2 ? 'md:grid-cols-2' : ''} gap-6 md:gap-8 max-w-5xl mx-auto`}>
+                  {projects.map((project) => (
+                    <div key={project._id || project.project} className="h-full">
                       <ProjectCard project={project} />
                     </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-
-              {/* Navigation Buttons */}
-              {projects.length >= 3 && (
-                <>
-                  <button
-                    ref={prevRef}
-                    className={`portfolio-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 transition-all duration-300 z-20 ${
-                      darkMode
-                        ? "bg-gray-800 text-gray-300 border-gray-700 hover:bg-blue-600 hover:border-blue-500 hover:text-white"
-                        : "bg-white text-blue-500 border-gray-300 hover:bg-blue-500 hover:border-blue-500 hover:text-white shadow-lg"
-                    }`}
-                    aria-label="Previous projects"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    ref={nextRef}
-                    className={`portfolio-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 transition-all duration-300 z-20 ${
-                      darkMode
-                        ? "bg-gray-800 text-gray-300 border-gray-700 hover:bg-blue-600 hover:border-blue-500 hover:text-white"
-                        : "bg-white text-blue-500 border-gray-300 hover:bg-blue-500 hover:border-blue-500 hover:text-white shadow-lg"
-                    }`}
-                    aria-label="Next projects"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </>
+                  ))}
+                </div>
               )}
-
-              {/* Pagination */}
-              <div ref={paginationRef} className="portfolio-pagination mt-8"></div>
             </div>
           ) : (
             <div
