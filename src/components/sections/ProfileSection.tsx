@@ -13,7 +13,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import EducationTimeline from "./EducationTimeline";
 
-// Technologies Grid Component - Two Rows
+// Technologies Grid Component - Single Row with Wrap
 const TechnologiesGrid = ({ technologies, darkMode, colorTheme = 'green' }: { technologies: any[], darkMode: boolean, colorTheme?: 'green' | 'orange' }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -32,16 +32,10 @@ const TechnologiesGrid = ({ technologies, darkMode, colorTheme = 'green' }: { te
         textBorder: darkMode ? "border-green-500/50" : "border-green-400/50",
       };
 
-  // Split technologies into two rows
-  const midPoint = Math.ceil(technologies.length / 2);
-  const firstRow = technologies.slice(0, midPoint);
-  const secondRow = technologies.slice(midPoint);
-
   return (
     <div className="relative w-full">
-      {/* First Row */}
-      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-4">
-        {firstRow.map((tech, index) => {
+      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
+        {technologies.map((tech, index) => {
           const isHovered = hoveredIndex === index;
           return (
             <div
@@ -52,7 +46,7 @@ const TechnologiesGrid = ({ technologies, darkMode, colorTheme = 'green' }: { te
             >
               {/* Icon */}
               <div
-                className={`relative w-14 h-14 md:w-16 md:h-16 rounded-xl p-2.5 backdrop-blur-md border-2 cursor-pointer transition-all duration-300 ${
+                className={`relative w-14 h-14 md:w-16 md:h-16 rounded-xl p-2.5 backdrop-blur-md border-2 cursor-pointer transition-all duration-300 z-10 ${
                   darkMode
                     ? `bg-gray-800/60 ${colors.border} hover:bg-gray-800/80 shadow-lg ${colors.shadow}`
                     : `bg-white/70 ${colors.border} hover:bg-white shadow-lg ${colors.shadow}`
@@ -67,53 +61,7 @@ const TechnologiesGrid = ({ technologies, darkMode, colorTheme = 'green' }: { te
 
               {/* Tooltip */}
               <div
-                className={`absolute -bottom-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none ${
-                  isHovered
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-2"
-                } ${
-                  darkMode
-                    ? `bg-gray-800 ${colors.text} border ${colors.textBorder}`
-                    : `bg-white ${colors.text} border ${colors.textBorder} shadow-lg`
-                }`}
-              >
-                {tech.name}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Second Row */}
-      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
-        {secondRow.map((tech, index) => {
-          const actualIndex = midPoint + index;
-          const isHovered = hoveredIndex === actualIndex;
-          return (
-            <div
-              key={tech.name}
-              className="group relative"
-              onMouseEnter={() => setHoveredIndex(actualIndex)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              {/* Icon */}
-              <div
-                className={`relative w-14 h-14 md:w-16 md:h-16 rounded-xl p-2.5 backdrop-blur-md border-2 cursor-pointer transition-all duration-300 ${
-                  darkMode
-                    ? `bg-gray-800/60 ${colors.border} hover:bg-gray-800/80 shadow-lg ${colors.shadow}`
-                    : `bg-white/70 ${colors.border} hover:bg-white shadow-lg ${colors.shadow}`
-                }`}
-              >
-                <img
-                  src={tech.icon}
-                  alt={tech.name}
-                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
-                />
-              </div>
-
-              {/* Tooltip */}
-              <div
-                className={`absolute -bottom-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none ${
+                className={`absolute -bottom-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none z-30 ${
                   isHovered
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-2"
@@ -178,12 +126,15 @@ const ProfileSection = () => {
   const technologies = [
     { name: "JavaScript", icon: "https://img.icons8.com/color/48/000000/javascript.png" },
     { name: "React", icon: "https://img.icons8.com/color/48/000000/react-native.png" },
-    { name: "Next.js", icon: "https://img.icons8.com/color/48/000000/nextjs.png" },
+    { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
     { name: "Node.js", icon: "https://img.icons8.com/color/48/000000/nodejs.png" },
     { name: "Python", icon: "https://img.icons8.com/ios-filled/50/000000/python.png" },
     { name: "MongoDB", icon: "https://img.icons8.com/color/48/000000/mongodb.png" },
+    { name: "MySQL", icon: "https://img.icons8.com/color/48/000000/mysql.png" },
+    { name: "Docker", icon: "https://img.icons8.com/color/48/000000/docker.png" },
     { name: "HTML", icon: "https://img.icons8.com/color/48/000000/html-5.png" },
     { name: "CSS", icon: "https://img.icons8.com/ios-filled/50/000000/css3.png" },
+    { name: "Tailwind CSS", icon: "https://img.icons8.com/color/48/000000/tailwindcss.png" },
     { name: "Git", icon: "https://img.icons8.com/color/48/000000/git.png" },
     { name: "GitHub", icon: "https://img.icons8.com/color/48/000000/github.png" },
   ];
@@ -195,6 +146,14 @@ const ProfileSection = () => {
     { name: "InDesign", icon: "https://img.icons8.com/color/48/000000/adobe-indesign.png" },
     { name: "Canva", icon: "https://img.icons8.com/color/48/000000/canva.png" },
     { name: "DaVinci Resolve", icon: "https://img.icons8.com/color/48/000000/davinci-resolve.png" },
+    { name: "Stripo", icon: "https://assets.stripo.email/static/assets/img/favicon/favicon-32x32.png" },
+    { name: "Mailchimp", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/mailchimp.svg" },
+    { name: "Email on Acid", icon: "https://www.emailonacid.com/wp-content/uploads/2020/10/cropped-favicon-512x512-1.png" },
+    { name: "EmailJS", icon: "https://www.emailjs.com/assets/img/logo.png" },
+    { name: "VS Code", icon: "https://img.icons8.com/color/48/visual-studio-code-2019.png" },
+    { name: "WordPress", icon: "https://img.icons8.com/color/48/wordpress.png" },
+    { name: "Cloudflare", icon: "https://img.icons8.com/color/48/cloudflare.png" },
+    { name: "Android Studio", icon: "https://img.icons8.com/color/48/android-studio--v3.png" },
   ];
 
   return (
@@ -408,7 +367,7 @@ const ProfileSection = () => {
                  darkMode ? "text-white" : "text-gray-900"
                }`}
              >
-               Technologies & Design Tools
+               Technologies & Tools
              </h3>
              <div className="flex justify-center gap-4">
                <div
@@ -424,10 +383,10 @@ const ProfileSection = () => {
              </div>
            </div>
 
-           {/* Unified Layout - Side by Side */}
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto">
+           {/* Unified Layout - Side by Side (Tech fixed, Tools wider) */}
+           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto">
              {/* Technologies Section */}
-             <div>
+             <div className="lg:col-span-6">
                <div className="text-center mb-6">
                  <h4
                    className={`text-xl md:text-2xl font-bold mb-3 ${
@@ -440,15 +399,15 @@ const ProfileSection = () => {
                <TechnologiesGrid technologies={technologies} darkMode={darkMode} />
              </div>
 
-             {/* Design Tools Section */}
-             <div>
+             {/* Tools Section (wider) */}
+             <div className="lg:col-span-6">
                <div className="text-center mb-6">
                  <h4
                    className={`text-xl md:text-2xl font-bold mb-3 ${
                      darkMode ? "text-orange-400" : "text-orange-600"
                    }`}
                  >
-                   Design Tools
+                   Tools
                  </h4>
                </div>
                <TechnologiesGrid technologies={softwares} darkMode={darkMode} colorTheme="orange" />
