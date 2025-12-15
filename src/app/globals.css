@@ -47,4 +47,15 @@
   .animate-slideIn {
     animation: slideIn 0.6s ease-in-out;
   }
+
+  /* Portfolio carousel - ensure equal heights */
+  .swiper-slide {
+    height: auto;
+    display: flex;
+  }
+
+  .swiper-slide > div {
+    width: 100%;
+    display: flex;
+  }
 }

@@ -1,186 +1,460 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import {
   FaGraduationCap,
   FaLaptopCode,
   FaTools,
   FaPaintBrush,
+  FaCode,
+  FaRocket,
+  FaAward,
 } from "react-icons/fa";
 import { useTheme } from "@/contexts/ThemeContext";
+import EducationTimeline from "./EducationTimeline";
+
+// Technologies Grid Component - Two Rows
+const TechnologiesGrid = ({ technologies, darkMode, colorTheme = 'green' }: { technologies: any[], darkMode: boolean, colorTheme?: 'green' | 'orange' }) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  // Color configuration based on theme
+  const colors = colorTheme === 'orange' 
+    ? {
+        border: darkMode ? "border-orange-500/40 hover:border-orange-400" : "border-orange-400/50 hover:border-orange-500",
+        shadow: darkMode ? "hover:shadow-orange-500/50" : "hover:shadow-orange-400/50",
+        text: darkMode ? "text-orange-300" : "text-orange-700",
+        textBorder: darkMode ? "border-orange-500/50" : "border-orange-400/50",
+      }
+    : {
+        border: darkMode ? "border-green-500/40 hover:border-green-400" : "border-green-400/50 hover:border-green-500",
+        shadow: darkMode ? "hover:shadow-green-500/50" : "hover:shadow-green-400/50",
+        text: darkMode ? "text-green-300" : "text-green-700",
+        textBorder: darkMode ? "border-green-500/50" : "border-green-400/50",
+      };
+
+  // Split technologies into two rows
+  const midPoint = Math.ceil(technologies.length / 2);
+  const firstRow = technologies.slice(0, midPoint);
+  const secondRow = technologies.slice(midPoint);
+
+  return (
+    <div className="relative w-full">
+      {/* First Row */}
+      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-4">
+        {firstRow.map((tech, index) => {
+          const isHovered = hoveredIndex === index;
+          return (
+            <div
+              key={tech.name}
+              className="group relative"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {/* Icon */}
+              <div
+                className={`relative w-14 h-14 md:w-16 md:h-16 rounded-xl p-2.5 backdrop-blur-md border-2 cursor-pointer transition-all duration-300 ${
+                  darkMode
+                    ? `bg-gray-800/60 ${colors.border} hover:bg-gray-800/80 shadow-lg ${colors.shadow}`
+                    : `bg-white/70 ${colors.border} hover:bg-white shadow-lg ${colors.shadow}`
+                }`}
+              >
+                <img
+                  src={tech.icon}
+                  alt={tech.name}
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+
+              {/* Tooltip */}
+              <div
+                className={`absolute -bottom-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none ${
+                  isHovered
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-2"
+                } ${
+                  darkMode
+                    ? `bg-gray-800 ${colors.text} border ${colors.textBorder}`
+                    : `bg-white ${colors.text} border ${colors.textBorder} shadow-lg`
+                }`}
+              >
+                {tech.name}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Second Row */}
+      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
+        {secondRow.map((tech, index) => {
+          const actualIndex = midPoint + index;
+          const isHovered = hoveredIndex === actualIndex;
+          return (
+            <div
+              key={tech.name}
+              className="group relative"
+              onMouseEnter={() => setHoveredIndex(actualIndex)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {/* Icon */}
+              <div
+                className={`relative w-14 h-14 md:w-16 md:h-16 rounded-xl p-2.5 backdrop-blur-md border-2 cursor-pointer transition-all duration-300 ${
+                  darkMode
+                    ? `bg-gray-800/60 ${colors.border} hover:bg-gray-800/80 shadow-lg ${colors.shadow}`
+                    : `bg-white/70 ${colors.border} hover:bg-white shadow-lg ${colors.shadow}`
+                }`}
+              >
+                <img
+                  src={tech.icon}
+                  alt={tech.name}
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+
+              {/* Tooltip */}
+              <div
+                className={`absolute -bottom-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none ${
+                  isHovered
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-2"
+                } ${
+                  darkMode
+                    ? `bg-gray-800 ${colors.text} border ${colors.textBorder}`
+                    : `bg-white ${colors.text} border ${colors.textBorder} shadow-lg`
+                }`}
+              >
+                {tech.name}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 const ProfileSection = () => {
   const { darkMode } = useTheme();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById("profile-section");
+    if (section) {
+      observer.observe(section);
+    }
+
+    return () => {
+      if (section) {
+        observer.unobserve(section);
+      }
+    };
+  }, []);
+
+  const stats = [
+    { label: "Projects Completed", value: "50+", icon: FaRocket },
+    { label: "Technologies Mastered", value: "15+", icon: FaCode },
+    { label: "Years of Experience", value: "3+", icon: FaAward },
+  ];
+
+  const skills = [
+    "Web Development",
+    "Graphic Design",
+    "UX/UI Design",
+    "Database Management",
+    "Prompt Engineering",
+  ];
+
+  const technologies = [
+    { name: "JavaScript", icon: "https://img.icons8.com/color/48/000000/javascript.png" },
+    { name: "React", icon: "https://img.icons8.com/color/48/000000/react-native.png" },
+    { name: "Next.js", icon: "https://img.icons8.com/color/48/000000/nextjs.png" },
+    { name: "Node.js", icon: "https://img.icons8.com/color/48/000000/nodejs.png" },
+    { name: "Python", icon: "https://img.icons8.com/ios-filled/50/000000/python.png" },
+    { name: "MongoDB", icon: "https://img.icons8.com/color/48/000000/mongodb.png" },
+    { name: "HTML", icon: "https://img.icons8.com/color/48/000000/html-5.png" },
+    { name: "CSS", icon: "https://img.icons8.com/ios-filled/50/000000/css3.png" },
+    { name: "Git", icon: "https://img.icons8.com/color/48/000000/git.png" },
+    { name: "GitHub", icon: "https://img.icons8.com/color/48/000000/github.png" },
+  ];
+
+  const softwares = [
+    { name: "Photoshop", icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png" },
+    { name: "Illustrator", icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png" },
+    { name: "Figma", icon: "https://img.icons8.com/color/48/000000/figma.png" },
+    { name: "InDesign", icon: "https://img.icons8.com/color/48/000000/adobe-indesign.png" },
+    { name: "Canva", icon: "https://img.icons8.com/color/48/000000/canva.png" },
+    { name: "DaVinci Resolve", icon: "https://img.icons8.com/color/48/000000/davinci-resolve.png" },
+  ];
 
   return (
-    <section className="min-h-screen py-4 transition-colors duration-500">
-      <div className="container mx-auto text-center md:text-left">
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-center">
-          About Me & My Skills
-        </h2>
-        <p className="text-lg md:text-xl mb-12">
-          I am a passionate developer and designer, combining creativity and
-          technology to build impactful solutions. Here's a look at my
-          background and tools I use to bring ideas to life.
-        </p>
+    <section
+      id="profile-section"
+      className="relative min-h-screen py-20 transition-colors duration-500 overflow-hidden"
+    >
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className={`absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl opacity-20 animate-pulse ${
+            darkMode ? "bg-blue-500" : "bg-blue-300"
+          }`}
+          style={{ animationDuration: "4s" }}
+        ></div>
+        <div
+          className={`absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl opacity-20 animate-pulse ${
+            darkMode ? "bg-purple-500" : "bg-purple-300"
+          }`}
+          style={{ animationDuration: "5s", animationDelay: "1s" }}
+        ></div>
+        <div
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-3xl opacity-10 animate-pulse ${
+            darkMode ? "bg-pink-500" : "bg-pink-300"
+          }`}
+          style={{ animationDuration: "6s", animationDelay: "2s" }}
+        ></div>
+      </div>
 
-        {/* Grid Layout: All containers with the same size */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {/* Degree */}
-          <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
-              darkMode ? "bg-gray-800" : "bg-white"
-            }`}
-            style={{ position: "relative", zIndex: 1 }}
-          >
-            <FaGraduationCap className="text-5xl text-blue-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Degree</h3>
-            <p className="text-md">
-              Bachelor's in Information Communication Technology (HONS)
-            </p>
-            <p className="text-md">
-              University of Rajarata Faculty of Technology
-            </p>
-          </div>
-
-          {/* Courses */}
-          <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
-              darkMode ? "bg-gray-800" : "bg-white"
-            }`}
-            style={{ position: "relative", zIndex: 1 }}
-          >
-            <FaLaptopCode className="text-5xl text-green-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Skills</h3>
-            <p className="text-md">Web Development</p>
-            <p className="text-md">Graphic Design & UX/UI Design</p>
-            <p className="text-md">Database Management</p>
-            <p className="text-md">Prompt Engineering</p>
-          </div>
-
-          {/* Tools & Technologies */}
-          <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
-              darkMode ? "bg-gray-800" : "bg-white"
-            }`}
-            style={{ position: "relative", zIndex: 1 }}
-          >
-            <FaTools className="text-5xl text-red-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Tools & Technologies</h3>
-            <div className="flex flex-wrap justify-center gap-4 mt-4">
-              {/* Icons for Tools with Tooltips */}
-              <img
-                src="https://img.icons8.com/color/48/000000/javascript.png"
-                alt="JavaScript"
-                title="JavaScript"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/react-native.png"
-                alt="React"
-                title="React"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/nextjs.png"
-                alt="NextJS"
-                title="NextJS"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/nodejs.png"
-                alt="Node.js"
-                title="Node.js"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/ios-filled/50/000000/python.png"
-                alt="Python"
-                title="Python"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/mongodb.png"
-                alt="MongoDB"
-                title="MongoDB"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/html-5.png"
-                alt="HTML"
-                title="HTML"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/ios-filled/50/000000/css3.png"
-                alt="CSS"
-                title="CSS"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/git.png"
-                alt="Git"
-                title="Git"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/github.png"
-                alt="GitHub"
-                title="GitHub"
-                className="w-12 h-12"
-              />
-            </div>
-          </div>
-
-          {/* Softwares */}
-          <div
-            className={`flex flex-col items-center justify-center text-center p-8 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 ${
-              darkMode ? "bg-gray-800" : "bg-white"
-            }`}
-            style={{ position: "relative", zIndex: 1 }}
-          >
-            <FaPaintBrush className="text-5xl text-purple-500 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Softwares I Use</h3>
-            <div className="flex flex-wrap justify-center gap-4 mt-4">
-              {/* Icons for Softwares with Tooltips */}
-              <img
-                src="https://img.icons8.com/color/48/000000/adobe-photoshop.png"
-                alt="Adobe Photoshop"
-                title="Adobe Photoshop"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/adobe-illustrator.png"
-                alt="Adobe Illustrator"
-                title="Adobe Illustrator"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/figma.png"
-                alt="Figma"
-                title="Figma"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/adobe-indesign.png"
-                alt="Adobe InDesign"
-                title="Adobe InDesign"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/canva.png"
-                alt="Canva"
-                title="Canva"
-                className="w-12 h-12"
-              />
-              <img
-                src="https://img.icons8.com/color/48/000000/davinci-resolve.png"
-                alt="DaVinci Resolve"
-                title="DaVinci Resolve"
-                className="w-12 h-12"
-              />
-            </div>
-          </div>
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
+        {/* Header Section */}
+        <div
+          className={`text-center mb-16 transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <h2 className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            About Me
+          </h2>
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
+            I am a passionate{" "}
+            <span className="font-bold text-blue-500">developer</span> and{" "}
+            <span className="font-bold text-purple-500">designer</span>, combining creativity and
+            technology to build impactful solutions.
+          </p>
         </div>
+
+         {/* Stats Section - Enhanced Info Tiles */}
+         <div
+           className={`grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 transition-all duration-1000 delay-200 ${
+             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+           }`}
+         >
+           {stats.map((stat, index) => {
+             const Icon = stat.icon;
+             const gradients = [
+               { from: "from-blue-500", via: "via-cyan-500", to: "to-blue-600" },
+               { from: "from-purple-500", via: "via-pink-500", to: "to-purple-600" },
+               { from: "from-pink-500", via: "via-rose-500", to: "to-pink-600" },
+             ];
+             const gradient = gradients[index % gradients.length];
+             
+             return (
+               <div
+                 key={stat.label}
+                 className={`group relative overflow-hidden rounded-3xl p-8 border-2 transition-all duration-500 hover:scale-105 hover:shadow-2xl ${
+                   darkMode
+                     ? "bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-gray-700/50 hover:border-gray-600"
+                     : "bg-gradient-to-br from-white to-gray-50 border-gray-200/70 hover:border-gray-300 shadow-xl"
+                 }`}
+                 style={{
+                   animationDelay: `${index * 0.1}s`,
+                 }}
+               >
+                 {/* Animated gradient background */}
+                 <div
+                   className={`absolute inset-0 bg-gradient-to-br ${gradient.from} ${gradient.via} ${gradient.to} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+                 ></div>
+                 
+                 {/* Shimmer effect */}
+                 <div
+                   className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000`}
+                   style={{
+                     animationDelay: `${index * 0.2}s`,
+                   }}
+                 ></div>
+
+                 {/* Decorative corner elements */}
+                 <div
+                   className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient.from} ${gradient.to} opacity-5 rounded-bl-full`}
+                 ></div>
+                 <div
+                   className={`absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr ${gradient.from} ${gradient.to} opacity-5 rounded-tr-full`}
+                 ></div>
+
+                 <div className="relative z-10">
+                   {/* Icon with animated background */}
+                   <div className="flex items-center justify-center mb-6">
+                     <div
+                       className={`relative p-5 rounded-2xl bg-gradient-to-br ${gradient.from} ${gradient.to} shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                     >
+                       <Icon className="text-3xl text-white relative z-10" />
+                       {/* Glowing effect */}
+                       <div
+                         className={`absolute inset-0 bg-gradient-to-br ${gradient.from} ${gradient.to} opacity-50 blur-xl group-hover:opacity-75 transition-opacity duration-300`}
+                       ></div>
+                     </div>
+                   </div>
+
+                   {/* Value with gradient text */}
+                   <div
+                     className={`text-5xl md:text-6xl font-extrabold mb-3 bg-gradient-to-r ${gradient.from} ${gradient.via} ${gradient.to} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}
+                   >
+                     {stat.value}
+                   </div>
+
+                   {/* Label */}
+                   <div
+                     className={`text-base md:text-lg font-semibold uppercase tracking-wider ${
+                       darkMode ? "text-gray-300" : "text-gray-600"
+                     }`}
+                   >
+                     {stat.label}
+                   </div>
+
+                   {/* Decorative line */}
+                   <div
+                     className={`mt-4 h-1 w-16 bg-gradient-to-r ${gradient.from} ${gradient.to} rounded-full group-hover:w-24 transition-all duration-300`}
+                   ></div>
+                 </div>
+
+                 {/* Floating particles effect on hover */}
+                 <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                   {[...Array(6)].map((_, i) => (
+                     <div
+                       key={i}
+                       className={`absolute w-2 h-2 rounded-full bg-gradient-to-r ${gradient.from} ${gradient.to} animate-float`}
+                       style={{
+                         left: `${20 + i * 15}%`,
+                         top: `${30 + (i % 2) * 40}%`,
+                         animationDelay: `${i * 0.1}s`,
+                         animationDuration: `${3 + i * 0.5}s`,
+                       }}
+                     ></div>
+                   ))}
+                 </div>
+               </div>
+             );
+           })}
+         </div>
+
+         {/* Core Skills Section - After Info Tiles */}
+         <div
+           className={`mb-16 transition-all duration-1000 delay-300 ${
+             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+           }`}
+         >
+           <div className="text-center mb-8">
+             <h3
+               className={`text-3xl md:text-4xl font-bold mb-3 ${
+                 darkMode ? "text-white" : "text-gray-900"
+               }`}
+             >
+               Core Skills
+             </h3>
+             <div
+               className={`h-1 w-24 mx-auto rounded-full ${
+                 darkMode ? "bg-gradient-to-r from-purple-500 to-pink-500" : "bg-gradient-to-r from-purple-400 to-pink-400"
+               }`}
+             ></div>
+           </div>
+           <div className="flex flex-wrap justify-center gap-4">
+             {skills.map((skill, index) => (
+               <div
+                 key={skill}
+                 className={`group relative px-6 py-3 rounded-full text-base font-medium transition-all duration-300 hover:scale-110 cursor-default ${
+                   darkMode
+                     ? "bg-gray-800/60 border border-gray-700/50 text-gray-200 hover:bg-gray-700/80 hover:border-purple-500/50 hover:text-purple-300 shadow-lg hover:shadow-purple-500/20"
+                     : "bg-white/80 border border-gray-200/70 text-gray-700 hover:bg-white hover:border-purple-400/70 hover:text-purple-600 shadow-md hover:shadow-purple-400/20"
+                 }`}
+                 style={{
+                   animationDelay: `${index * 0.05}s`,
+                 }}
+               >
+                 <span className="relative z-10">{skill}</span>
+                 {/* Subtle glow on hover */}
+                 <div
+                   className={`absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                     darkMode ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20" : "bg-gradient-to-r from-purple-400/20 to-pink-400/20"
+                   }`}
+                 ></div>
+               </div>
+             ))}
+           </div>
+         </div>
+
+         {/* Education Timeline Section - Full Width Magical Timeline */}
+         <div className="mb-16">
+           <EducationTimeline />
+         </div>
+
+         {/* Technologies & Design Tools Section - Combined */}
+         <div
+           className={`mb-16 transition-all duration-1000 delay-400 ${
+             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+           }`}
+         >
+           <div className="text-center mb-12">
+             <h3
+               className={`text-3xl md:text-4xl font-bold mb-4 ${
+                 darkMode ? "text-white" : "text-gray-900"
+               }`}
+             >
+               Technologies & Design Tools
+             </h3>
+             <div className="flex justify-center gap-4">
+               <div
+                 className={`h-1 w-16 rounded-full ${
+                   darkMode ? "bg-gradient-to-r from-green-500 to-emerald-500" : "bg-gradient-to-r from-green-400 to-emerald-400"
+                 }`}
+               ></div>
+               <div
+                 className={`h-1 w-16 rounded-full ${
+                   darkMode ? "bg-gradient-to-r from-orange-500 to-red-500" : "bg-gradient-to-r from-orange-400 to-red-400"
+                 }`}
+               ></div>
+             </div>
+           </div>
+
+           {/* Unified Layout - Side by Side */}
+           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 max-w-7xl mx-auto">
+             {/* Technologies Section */}
+             <div>
+               <div className="text-center mb-6">
+                 <h4
+                   className={`text-xl md:text-2xl font-bold mb-3 ${
+                     darkMode ? "text-green-400" : "text-green-600"
+                   }`}
+                 >
+                   Technologies
+                 </h4>
+               </div>
+               <TechnologiesGrid technologies={technologies} darkMode={darkMode} />
+             </div>
+
+             {/* Design Tools Section */}
+             <div>
+               <div className="text-center mb-6">
+                 <h4
+                   className={`text-xl md:text-2xl font-bold mb-3 ${
+                     darkMode ? "text-orange-400" : "text-orange-600"
+                   }`}
+                 >
+                   Design Tools
+                 </h4>
+               </div>
+               <TechnologiesGrid technologies={softwares} darkMode={darkMode} colorTheme="orange" />
+             </div>
+           </div>
+         </div>
       </div>
     </section>
   );

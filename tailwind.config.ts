@@ -21,9 +21,20 @@ const config: Config = {
             transform: 'translateY(0)',
           },
         },
+        'float': {
+          '0%, 100%': { 
+            transform: 'translateY(0px) scale(1)', 
+            opacity: '0.7' 
+          },
+          '50%': { 
+            transform: 'translateY(-20px) scale(1.2)', 
+            opacity: '1' 
+          },
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.5s ease-out both',
+        'float': 'float 3s ease-in-out infinite',
       },
     },
   },
