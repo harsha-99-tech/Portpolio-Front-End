@@ -107,30 +107,47 @@ if (fs.existsSync(publicDir)) {
 // Exclude static assets so they're served directly by Cloudflare Pages CDN (faster and more reliable)
 const routesPath = path.join('.open-next', '_routes.json');
 
+// Define wildcard patterns that cover multiple files
+const wildcardPatterns = [
+  '/_next/static/*',  // Next.js static assets (JS bundles, CSS) - serve from CDN
+  '/_next/image*',    // Next.js image optimization
+  '/*.png',           // All PNG files
+  '/*.jpg',           // All JPG files
+  '/*.jpeg',          // All JPEG files
+  '/*.gif',           // All GIF files
+  '/*.webp',          // All WebP files
+  '/*.svg',           // All SVG files
+  '/*.ico',           // All ICO files
+  '/images/*',       // All files in images directory
+  '/favicon-*.png',   // Favicon variants
+];
+
+// Filter out individual file paths that are already covered by wildcard patterns
+const filteredPublicFiles = publicFiles.filter(filePath => {
+  // Check if this file path is covered by any wildcard pattern
+  return !wildcardPatterns.some(pattern => {
+    // Convert wildcard pattern to regex
+    const regexPattern = pattern
+      .replace(/\*/g, '.*')  // Convert * to .*
+      .replace(/\//g, '\\/'); // Escape slashes
+    
+    const regex = new RegExp(`^${regexPattern}$`);
+    return regex.test(filePath);
+  });
+});
+
 const routesConfig = {
   version: 1,
   include: ['/*'],
   exclude: [
-    '/_next/static/*',  // Next.js static assets (JS bundles, CSS) - serve from CDN
-    '/_next/image*',    // Next.js image optimization
-    // Image file extensions - exclude from Worker routing
-    '/*.png',
-    '/*.jpg',
-    '/*.jpeg',
-    '/*.gif',
-    '/*.webp',
-    '/*.svg',
-    '/*.ico',
-    // Common public files
+    ...wildcardPatterns,
+    // Common public files (only if not covered by wildcards)
     '/favicon.ico',
     '/favicon.svg',
-    '/favicon-*.png',
     '/apple-touch-icon.png',
     '/site.webmanifest',
-    // Exclude all public folder files (specific paths)
-    ...publicFiles,
-    // Exclude images directory and subdirectories
-    '/images/*'
+    // Exclude specific public folder files that aren't covered by wildcards
+    ...filteredPublicFiles
   ]
 };
 
