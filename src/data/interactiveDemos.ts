@@ -103,6 +103,15 @@ useEffect(() => {
     description: "Interactive particle animation with canvas",
     githubRepo: "https://github.com/yourusername/particle-system-demo",
     type: "particle-system",
+    code: `const ParticleSystem = () => {
+  return (
+    <div className="w-full h-48">
+      <canvas id="particle-canvas" className="w-full h-full"></canvas>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-03").toISOString(),
     updatedAt: new Date("2024-01-03").toISOString(),
   },
@@ -141,6 +150,15 @@ useEffect(() => {
     description: "Smooth loading spinner with gradient",
     githubRepo: "https://github.com/yourusername/loading-animation-demo",
     type: "loading-animation",
+    code: `const LoadingAnimation = () => {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-05").toISOString(),
     updatedAt: new Date("2024-01-05").toISOString(),
   },
@@ -176,6 +194,15 @@ keyframes: {
     description: "Pulsing glow animation with shadow",
     githubRepo: "https://github.com/yourusername/pulse-glow-demo",
     type: "pulse-glow",
+    code: `const PulseGlow = () => {
+  return (
+    <div className="relative w-24 h-24">
+      <div className="absolute inset-0 rounded-full bg-purple-500 animate-pulse"></div>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-07").toISOString(),
     updatedAt: new Date("2024-01-07").toISOString(),
   },
@@ -186,6 +213,13 @@ keyframes: {
     description: "Smooth bouncing ball animation",
     githubRepo: "https://github.com/yourusername/bounce-animation-demo",
     type: "bounce",
+    code: `const BounceAnimation = () => {
+  return (
+    <div className="w-16 h-16 bg-purple-500 rounded-full animate-bounce"></div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-08").toISOString(),
     updatedAt: new Date("2024-01-08").toISOString(),
   },
@@ -196,6 +230,15 @@ keyframes: {
     description: "3D rotating cube with CSS transforms",
     githubRepo: "https://github.com/yourusername/rotating-cube-demo",
     type: "rotating-cube",
+    code: `const RotatingCube = () => {
+  return (
+    <div className="w-24 h-24 bg-purple-500 rounded-lg transform rotate-x-45 rotate-y-45">
+      <div className="w-full h-full bg-purple-600"></div>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-09").toISOString(),
     updatedAt: new Date("2024-01-09").toISOString(),
   },
@@ -206,6 +249,15 @@ keyframes: {
     description: "Animated progress bar with gradient",
     githubRepo: "https://github.com/yourusername/progress-bar-demo",
     type: "progress-bar",
+    code: `const ProgressBar = () => {
+  return (
+    <div className="w-full h-4 bg-gray-200 rounded-full">
+      <div className="h-full bg-purple-500 rounded-full" style={{ width: "60%" }}></div>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-10").toISOString(),
     updatedAt: new Date("2024-01-10").toISOString(),
   },
@@ -216,6 +268,16 @@ keyframes: {
     description: "Multiple elements floating with different speeds",
     githubRepo: "https://github.com/yourusername/floating-elements-demo",
     type: "floating-elements",
+    code: `const FloatingElements = () => {
+  return (
+    <div className="flex space-x-4">
+      <div className="w-8 h-8 bg-purple-500 rounded-full animate-float"></div>
+      <div className="w-8 h-8 bg-purple-500 rounded-full animate-float"></div>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-11").toISOString(),
     updatedAt: new Date("2024-01-11").toISOString(),
   },
@@ -226,6 +288,15 @@ keyframes: {
     description: "Smooth wave effect with SVG",
     githubRepo: "https://github.com/yourusername/wave-animation-demo",
     type: "wave-animation",
+    code: `const WaveAnimation = () => {
+  return (
+    <div className="w-full h-24 bg-gradient-to-b from-transparent to-purple-500 overflow-hidden">
+      <div className="w-full h-full bg-purple-500 animate-wave"></div>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-12").toISOString(),
     updatedAt: new Date("2024-01-12").toISOString(),
   },
@@ -236,6 +307,17 @@ keyframes: {
     description: "Text typing animation effect",
     githubRepo: "https://github.com/yourusername/typewriter-demo",
     type: "typewriter",
+    code: `const TypewriterEffect = () => {
+  return (
+    <div className="text-4xl font-bold">
+      <span className="inline-block w-0 h-0 overflow-hidden whitespace-nowrap border-b-[1px] animate-typewriter">
+        Typewriter Effect
+      </span>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-13").toISOString(),
     updatedAt: new Date("2024-01-13").toISOString(),
   },
@@ -246,6 +328,13 @@ keyframes: {
     description: "Shimmer loading animation",
     githubRepo: "https://github.com/yourusername/shimmer-demo",
     type: "shimmer",
+    code: `const ShimmerEffect = () => {
+  return (
+    <div className="w-full h-24 bg-gray-200 rounded-lg animate-shimmer"></div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-14").toISOString(),
     updatedAt: new Date("2024-01-14").toISOString(),
   },
@@ -256,6 +345,22 @@ keyframes: {
     description: "Card flip animation on hover",
     githubRepo: "https://github.com/yourusername/flip-card-demo",
     type: "flip-card",
+    code: `const FlipCard = () => {
+  return (
+    <div className="w-full h-48">
+      <div className="relative h-full">
+        <div className="absolute inset-0 transform rotate-y-0 scale-100 backface-hidden">
+          Front Content
+        </div>
+        <div className="absolute inset-0 transform rotate-y-180 scale-100 backface-hidden">
+          Back Content
+        </div>
+      </div>
+    </div>
+  );
+};
+`,
+    codeLanguage: "tsx",
     createdAt: new Date("2024-01-15").toISOString(),
     updatedAt: new Date("2024-01-15").toISOString(),
   },

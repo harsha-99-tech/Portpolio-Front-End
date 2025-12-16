@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { FaGithub, FaCode, FaCopy, FaCheck } from "react-icons/fa";
 import { interactiveDemos, DemoType } from "@/data/interactiveDemos";
@@ -85,7 +85,7 @@ const InteractiveDemosSection = () => {
   };
 
   // Component factory function to render demo components based on type
-  const renderDemoComponent = (type: DemoType): JSX.Element => {
+  const renderDemoComponent = (type: DemoType): React.ReactElement => {
     switch (type) {
       case "ripple-button":
         return (
