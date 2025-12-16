@@ -37,19 +37,19 @@ const FloatingSocialLinks = () => {
   const socialLinks: SocialLink[] = [
     {
       name: "GitHub",
-      url: "https://github.com/yourusername",
+      url: "https://github.com/harsha-99-tech",
       icon: <FaGithub />,
       ariaLabel: "Visit my GitHub profile",
     },
     {
       name: "LinkedIn",
-      url: "https://www.linkedin.com/in/yourprofile",
+      url: "https://www.linkedin.com/in/harsha-nawana",
       icon: <FaLinkedin />,
       ariaLabel: "Visit my LinkedIn profile",
     },
     {
       name: "Instagram",
-      url: "https://www.instagram.com/yourusername",
+      url: "https://www.instagram.com/harsha_nawana",
       icon: <FaInstagram />,
       ariaLabel: "Visit my Instagram profile",
     },

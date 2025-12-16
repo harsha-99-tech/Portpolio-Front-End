@@ -72,7 +72,7 @@ const HeroSection = () => {
             } transition-transform duration-300`}
           >
             <Image
-              src="/my-photo1.png"
+              src="/my-photo.jpg"
               alt="Harsha Nawana"
               width={384}
               height={384}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FaGraduationCap, FaAward, FaCertificate, FaUniversity } from "react-icons/fa";
+import { FaGraduationCap, FaAward, FaCertificate, FaUniversity, FaSchool } from "react-icons/fa";
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface EducationItem {
@@ -10,7 +10,7 @@ interface EducationItem {
   institution: string;
   period: string;
   description?: string;
-  type: "degree" | "certification" | "course";
+  type: "degree" | "certification" | "course" | "A/Level";
   icon: React.ReactNode;
 }
 
@@ -32,12 +32,12 @@ const EducationTimeline = () => {
     },
     {
       id: "2",
-      title: "High School Diploma",
-      institution: "Example High School",
+      title: "High School",
+      institution: "Mahasen National School",
       period: "2013 - 2019",
-      description: "Focused on Science and Mathematics. Participated in various coding clubs and competitions.",
-      type: "degree",
-      icon: <FaGraduationCap className="text-3xl" />,
+      description: "Focused on Technology and Information Communication Technology. Participated in various coding clubs and competitions.",
+      type: "A/Level",
+      icon: <FaSchool className="text-3xl" />,
     },
     // Add more education items here
   ];

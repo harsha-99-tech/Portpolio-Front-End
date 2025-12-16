@@ -74,7 +74,7 @@ const LandingPage = () => {
           <div className="w-64 h-64 md:w-80 md:h-80 rounded-full shadow-lg overflow-hidden relative bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
             {!imageError ? (
               <Image
-                src="/my-photo.png"
+                src="/my-photo.jpg"
                 alt="Harsha Nawana"
                 width={320}
                 height={320}

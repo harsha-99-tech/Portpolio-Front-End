@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { testimonials } from "@/data/testimonials";
-import { FaQuoteLeft, FaStar } from "react-icons/fa";
+import { FaQuoteLeft, FaStar, FaUser } from "react-icons/fa";
 import Image from "next/image";
 
 const TestimonialSection = () => {
@@ -123,7 +123,7 @@ const TestimonialSection = () => {
                 {/* Avatar */}
                 <div className="flex-shrink-0">
                   {currentTestimonial.image ? (
-                    <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-purple-500">
+                    <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-purple-500 shadow-lg">
                       <Image
                         src={currentTestimonial.image}
                         alt={currentTestimonial.name}
@@ -132,10 +132,9 @@ const TestimonialSection = () => {
                       />
                     </div>
                   ) : (
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center border-2 border-purple-500">
-                      <span className="text-white text-2xl md:text-3xl font-bold">
-                        {currentTestimonial.name.charAt(0).toUpperCase()}
-                      </span>
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center border-2 border-purple-500 shadow-lg">
+                      {/* User Icon - only shown when no image */}
+                      <FaUser className="text-white text-2xl md:text-3xl" />
                     </div>
                   )}
                 </div>

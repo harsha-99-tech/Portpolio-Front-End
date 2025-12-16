@@ -111,9 +111,9 @@ const ProfileSection = () => {
   }, []);
 
   const stats = [
-    { label: "Projects Completed", value: "50+", icon: FaRocket },
-    { label: "Technologies Mastered", value: "15+", icon: FaCode },
-    { label: "Years of Experience", value: "3+", icon: FaAward },
+    { label: "Projects Completed", value: "20+", icon: FaRocket },
+    { label: "Technologies Mastered", value: "10+", icon: FaCode },
+    { label: "Years of Experience", value: "2+", icon: FaAward },
   ];
 
   const skills = [
