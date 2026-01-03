@@ -59,6 +59,19 @@ export const appProjects: StaticProject[] = [
 // Web Development Projects
 export const webProjects: StaticProject[] = [
   {
+    _id: "5",
+    id: "5",
+    project: "Expense Tracker Web App",
+    description:
+      "A Next.js web app for tracking personal expenses with local storage, import/export functionality, expense categorization, and data visualization using charts.",
+    link: "https://novo-digital-sollutions.github.io/Expense-Tracker/", // replace with your real demo / GitHub link
+    technologies: ["Next.js", "React.js", "HTML5", "CSS3", "JavaScript"],
+    tools: ["VS Code", "Git"],
+    image: "/images/projects/expense-tracker-web-app.jpg", // path to this screenshot in your project
+    createdAt: new Date("2020-09-01").toISOString(),
+    updatedAt: new Date("2020-10-01").toISOString(),
+  },
+    {
     _id: "6",
     id: "6",
     project: "Taste of Heaven – Restaurant Website",
