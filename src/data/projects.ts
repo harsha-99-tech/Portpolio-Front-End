@@ -213,6 +213,58 @@ export const webProjects: StaticProject[] = [
     image: "/images/projects/empower-agency-website.jpg",
     createdAt: new Date("2024-01-01").toISOString(), // adjust if needed
     updatedAt: new Date("2024-12-01").toISOString(),
+  },
+  {
+    _id: "17",
+    id: "17",
+    project: "Jeetbo7 News – News Website",
+    description:
+      "A WordPress-based news platform built with custom templates, focused on SEO-friendly content publishing and smooth user experience. Managed hosting, deployment, and regular content updates to ensure performance and reliability.",
+    link: "https://jeetbo7news.com/",
+    technologies: ["WordPress", "PHP", "HTML5", "CSS3"],
+    tools: ["cPanel", "VS Code", "Google Search Console"],
+    image: "/images/projects/Jeetbo7news.png",
+    createdAt: new Date("2025-01-01").toISOString(), // adjust if needed
+    updatedAt: new Date("2026-01-01").toISOString(),
+  },
+  {
+    _id: "18",
+    id: "18",
+    project: "Mobile-Style Landing Page",
+    description:
+      "Designed and developed a mobile-first landing page using custom WordPress templates, focusing on clean UI, fast loading, and smooth user experience. Optimized layout and structure for better engagement and conversion on mobile devices.",
+    link: "https://darkgreen-squirrel-656589.hostingersite.com",
+    technologies: ["WordPress", "HTML5", "CSS3"],
+    tools: ["VS Code", "cPanel"],
+    image: "/images/projects/taptap.png",
+    createdAt: new Date("2025-02-01").toISOString(), // adjust if needed
+    updatedAt: new Date("2026-02-01").toISOString(),
+  },
+  {
+    _id: "19",
+    id: "19",
+    project: "OneTeam Logistics – Company Website",
+    description:
+      "Built a logistics company website using custom WordPress templates, highlighting freight, warehousing, and supply chain services. Designed responsive layouts and structured content to clearly present services and improve user engagement.",
+    link: "https://oneteam.gt.tc/",
+    technologies: ["WordPress", "PHP", "HTML5", "CSS3"],
+    tools: ["VS Code", "cPanel"],
+    image: "/images/projects/oneteam.png",
+    createdAt: new Date("2025-03-01").toISOString(), // adjust if needed
+    updatedAt: new Date("2026-03-01").toISOString(),
+  },
+  {
+    _id: "20",
+    id: "20",
+    project: "GCSampleNovo – Logistics Company Website",
+    description:
+      "Built a logistics website using custom WordPress templates, showcasing freight, transportation, and warehousing services. Designed responsive layouts and organized content to clearly communicate services and improve user experience.",
+    link: "https://gcsamplenovo.gt.tc/",
+    technologies: ["WordPress", "PHP", "HTML5", "CSS3"],
+    tools: ["VS Code", "cPanel"],
+    image: "/images/projects/gcsamplenovo.png",
+    createdAt: new Date("2025-04-01").toISOString(), // adjust if needed
+    updatedAt: new Date("2026-04-01").toISOString(),
   }
 ];
 
