@@ -141,9 +141,9 @@ const ProfileSection = () => {
   ];
 
   const softwares = [
-    { name: "Photoshop", icon: "https://img.icons8.com/color/48/000000/adobe-photoshop.png" },
-    { name: "Illustrator", icon: "https://img.icons8.com/color/48/000000/adobe-illustrator.png" },
-    { name: "Figma", icon: "https://img.icons8.com/color/48/000000/figma.png" },
+    { name: "Cursor", icon: "https://img.icons8.com/color/48/cursor.png" },
+    { name: "Claude", icon: "https://img.icons8.com/color/48/artificial-intelligence.png" },
+    { name: "ChatGPT", icon: "https://img.icons8.com/color/48/chatgpt.png" },
     { name: "InDesign", icon: "https://img.icons8.com/color/48/000000/adobe-indesign.png" },
     { name: "Canva", icon: "https://img.icons8.com/color/48/000000/canva.png" },
     { name: "DaVinci Resolve", icon: "https://img.icons8.com/color/48/000000/davinci-resolve.png" },
