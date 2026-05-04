@@ -126,6 +126,7 @@ const ProfileSection = () => {
 
   const technologies = [
     { name: "JavaScript", icon: "https://img.icons8.com/color/48/000000/javascript.png" },
+    { name: "Laravel", icon: "https://img.icons8.com/?size=100&id=114956&format=png&color=000000" },
     { name: "React", icon: "https://img.icons8.com/color/48/000000/react-native.png" },
     { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
     { name: "Node.js", icon: "https://img.icons8.com/color/48/000000/nodejs.png" },
