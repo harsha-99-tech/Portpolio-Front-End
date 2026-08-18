@@ -129,7 +129,7 @@ export const webProjects: StaticProject[] = [
     project: "Filet Gourmet – E‑Commerce Website",
     description:
       "A WordPress WooCommerce store for Filet Gourmet with custom React/TypeScript plugins for enhanced shopping and subscriptions.",
-    link: "https://filetgourmet.empowerdigitaldata.com",
+    link: "https://filetgourmet.ca/",
     technologies: ["WordPress", "WooCommerce", "React", "TypeScript", "JavaScript", "php"],
     tools: ["VS Code", "Git", "Figma"],
     image: "/images/projects/filet-gourmet-ecommerce.jpg",
@@ -142,7 +142,7 @@ export const webProjects: StaticProject[] = [
     project: "Maison Rolland – E‑Commerce Website",
     description:
       "A WordPress WooCommerce bakery store with custom React and PHP plugins for tailored product and order experiences.",
-    link: "https://patisserie-rolland.empowerdigitaldata.com",
+    link: "https://patisserierolland.ca/",
     technologies: ["WordPress", "WooCommerce", "React", "PHP"],
     tools: ["VS Code", "Git"],
     image: "/images/projects/maison-rolland-ecommerce.jpg",
@@ -181,7 +181,7 @@ export const webProjects: StaticProject[] = [
     project: "Bar Figata – Restaurant Website",
     description:
       "A WordPress-powered website for Bar Figata featuring menu, reservations, and contact pages with a premium brand-focused design.",
-    link: "https://barfigata.empowerdigitaldata.com",
+    link: "https://figata.ca/",
     technologies: ["WordPress", "HTML5", "CSS3", "JavaScript"],
     tools: ["Elementor", "VS Code"],
     image: "/images/projects/bar-figata-website.jpg",
@@ -246,7 +246,7 @@ export const webProjects: StaticProject[] = [
     project: "OneTeam Logistics – Company Website",
     description:
       "Built a logistics company website using custom WordPress templates, highlighting freight, warehousing, and supply chain services. Designed responsive layouts and structured content to clearly present services and improve user engagement.",
-    link: "https://oneteam.gt.tc/",
+    link: "https://oneteamdubai.com/",
     technologies: ["WordPress", "PHP", "HTML5", "CSS3"],
     tools: ["VS Code", "cPanel"],
     image: "/images/projects/oneteam.png",
@@ -263,6 +263,19 @@ export const webProjects: StaticProject[] = [
     technologies: ["WordPress", "PHP", "HTML5", "CSS3"],
     tools: ["VS Code", "cPanel"],
     image: "/images/projects/gcsamplenovo.png",
+    createdAt: new Date("2025-04-01").toISOString(), // adjust if needed
+    updatedAt: new Date("2026-04-01").toISOString(),
+  },
+  {
+    _id: "21",
+    id: "21",
+    project: "D7R News – News Website",
+    description:
+      "Built a news website using custom WordPress templates, featuring breaking news, articles, and multimedia content. Designed responsive layouts and organized content to clearly communicate news and improve user experience.",
+    link: "https://d7rnews.com/",
+    technologies: ["WordPress", "PHP", "HTML5", "CSS3"],
+    tools: ["VS Code", "cPanel"],
+    image: "/images/projects/d7rnews.png",
     createdAt: new Date("2025-04-01").toISOString(), // adjust if needed
     updatedAt: new Date("2026-04-01").toISOString(),
   }
