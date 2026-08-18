@@ -53,7 +53,7 @@ export const appProjects: StaticProject[] = [
     image: "/images/projects/e-library-mobile-app.jpg",
     createdAt: new Date("2024-05-01").toISOString(),
     updatedAt: new Date("2024-08-01").toISOString(),
-  }
+  },
 ];
 
 // Web Development Projects
@@ -71,7 +71,7 @@ export const webProjects: StaticProject[] = [
     createdAt: new Date("2020-09-01").toISOString(),
     updatedAt: new Date("2020-10-01").toISOString(),
   },
-    {
+  {
     _id: "6",
     id: "6",
     project: "Taste of Heaven – Restaurant Website",
@@ -117,7 +117,14 @@ export const webProjects: StaticProject[] = [
     description:
       "A MERN-based web platform for visualizing Rideegama Area Programme projects, with Google Maps integration and EmailJS-powered contact.",
     link: "https://github.com/harsha-99-tech/WVL-Site", // replace with your live demo or GitHub URL
-    technologies: ["MongoDB", "Express.js", "React.js", "Node.js", "Google Maps API", "EmailJS"],
+    technologies: [
+      "MongoDB",
+      "Express.js",
+      "React.js",
+      "Node.js",
+      "Google Maps API",
+      "EmailJS",
+    ],
     tools: ["Postman", "VS Code", "Git"],
     image: "/images/projects/world-vision-rideegama-ap.jpg",
     createdAt: new Date("2024-08-01").toISOString(),
@@ -130,7 +137,14 @@ export const webProjects: StaticProject[] = [
     description:
       "A WordPress WooCommerce store for Filet Gourmet with custom React/TypeScript plugins for enhanced shopping and subscriptions.",
     link: "https://filetgourmet.ca/",
-    technologies: ["WordPress", "WooCommerce", "React", "TypeScript", "JavaScript", "php"],
+    technologies: [
+      "WordPress",
+      "WooCommerce",
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "php",
+    ],
     tools: ["VS Code", "Git", "Figma"],
     image: "/images/projects/filet-gourmet-ecommerce.jpg",
     createdAt: new Date("2024-01-01").toISOString(), // adjust dates if you want
@@ -278,7 +292,20 @@ export const webProjects: StaticProject[] = [
     image: "/images/projects/d7rnews.png",
     createdAt: new Date("2025-04-01").toISOString(), // adjust if needed
     updatedAt: new Date("2026-04-01").toISOString(),
-  }
+  },
+  {
+    _id: "22",
+    id: "22",
+    project: "Jeetbo7 Affiliate – Affiliate Marketing Website",
+    description:
+      "Built an affiliate marketing website using custom WordPress templates, featuring product listings, affiliate links, and promotional content. Designed responsive layouts and structured content to clearly communicate affiliate offerings and improve user engagement.",
+    link: "https://jb7affiliate.com",
+    technologies: ["WordPress", "PHP", "HTML5", "CSS3"],
+    tools: ["VS Code", "cPanel"],
+    image: "/images/projects/jb7affiliate.png",
+    createdAt: new Date("2025-04-01").toISOString(), // adjust if needed
+    updatedAt: new Date("2026-04-01").toISOString(),
+  },
 ];
 
 // Graphic Design Projects
@@ -287,7 +314,8 @@ export const graphicProjects: StaticProject[] = [
     _id: "12",
     id: "12",
     project: "Brand Identity Design",
-    description: "Complete brand identity package including logo design, color palette, typography, and brand guidelines for a tech startup",
+    description:
+      "Complete brand identity package including logo design, color palette, typography, and brand guidelines for a tech startup",
     link: "https://example.com/design1",
     technologies: ["Illustrator", "Photoshop", "InDesign"],
     tools: ["Adobe Creative Suite", "Figma"],
@@ -299,7 +327,8 @@ export const graphicProjects: StaticProject[] = [
     _id: "13",
     id: "13",
     project: "Poster Design Collection",
-    description: "A series of modern poster designs for music festivals with vibrant colors and typography",
+    description:
+      "A series of modern poster designs for music festivals with vibrant colors and typography",
     link: "https://example.com/design2",
     technologies: ["Photoshop", "Illustrator"],
     tools: ["Adobe Creative Suite"],
@@ -311,7 +340,8 @@ export const graphicProjects: StaticProject[] = [
     _id: "14",
     id: "14",
     project: "Packaging Design",
-    description: "Creative packaging design for a premium coffee brand with sustainable materials focus",
+    description:
+      "Creative packaging design for a premium coffee brand with sustainable materials focus",
     link: "https://example.com/design3",
     technologies: ["Illustrator", "Photoshop", "3D Rendering"],
     tools: ["Adobe Creative Suite", "Blender"],
@@ -323,7 +353,8 @@ export const graphicProjects: StaticProject[] = [
     _id: "15",
     id: "15",
     project: "Social Media Graphics",
-    description: "A complete set of social media graphics and templates for brand consistency across platforms",
+    description:
+      "A complete set of social media graphics and templates for brand consistency across platforms",
     link: "https://example.com/design4",
     technologies: ["Photoshop", "Illustrator", "Canva"],
     tools: ["Adobe Creative Suite", "Canva Pro"],
@@ -335,7 +366,8 @@ export const graphicProjects: StaticProject[] = [
     _id: "16",
     id: "16",
     project: "Magazine Layout Design",
-    description: "Editorial design for a lifestyle magazine with creative layouts and typography",
+    description:
+      "Editorial design for a lifestyle magazine with creative layouts and typography",
     link: "https://example.com/design5",
     technologies: ["InDesign", "Photoshop", "Illustrator"],
     tools: ["Adobe Creative Suite"],
@@ -515,7 +547,7 @@ export const uiProjects: StaticProject[] = [
     image: "/images/projects/rost-website-ui.jpg",
     createdAt: new Date("2024-01-01").toISOString(), // adjust if needed
     updatedAt: new Date("2024-12-01").toISOString(),
-  }
+  },
 ];
 
 // Other Projects
@@ -584,7 +616,7 @@ export const otherProjects: StaticProject[] = [
     image: "/images/projects/maison-letincelle-stripo-email.jpg",
     createdAt: new Date("2024-01-01").toISOString(), // adjust if needed
     updatedAt: new Date("2024-12-01").toISOString(),
-  }
+  },
 ];
 
 // Export projects by category
@@ -595,4 +627,3 @@ export const projectsByCategory: Record<string, StaticProject[]> = {
   ui: uiProjects,
   ot: otherProjects,
 };
-
