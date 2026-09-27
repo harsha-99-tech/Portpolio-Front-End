@@ -278,7 +278,20 @@ export const webProjects: StaticProject[] = [
     image: "/images/projects/d7rnews.png",
     createdAt: new Date("2025-04-01").toISOString(), // adjust if needed
     updatedAt: new Date("2026-04-01").toISOString(),
-  }
+  },
+  {
+    _id: "22",
+    id: "22",
+    project: "Flow Money Manager",
+    description:
+      "Built a money manager website using Next.js, Tailwind CSS, TypeScript, Shadcn UI, React, Node.js, and Vercel, highlighting money management, savings, and investment services. Designed responsive layouts and structured content to clearly present services and improve user engagement.",
+    link: "https://flow.novodigi.workers.dev",
+    technologies: ["Next.js", "Tailwind CSS", "TypeScript", "Shadcn UI", "React", "Node.js", "Vercel"],
+    tools: ["VS Code", "Cloudflare","pnpm"],
+    image: "/images/projects/flow.png",
+    createdAt: new Date("2025-05-01").toISOString(), // adjust if needed
+    updatedAt: new Date("2026-05-01").toISOString(),
+  },
 ];
 
 // Graphic Design Projects
