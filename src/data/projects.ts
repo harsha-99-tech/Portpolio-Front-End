@@ -116,7 +116,7 @@ export const webProjects: StaticProject[] = [
     project: "World Vision Lanka – Rideegama AP",
     description:
       "A MERN-based web platform for visualizing Rideegama Area Programme projects, with Google Maps integration and EmailJS-powered contact.",
-    link: "https://github.com/harsha-99-tech/WVL-Site", // replace with your live demo or GitHub URL
+    link: "https://ap-rideegama.netlify.app", // replace with your live demo or GitHub URL
     technologies: [
       "MongoDB",
       "Express.js",
